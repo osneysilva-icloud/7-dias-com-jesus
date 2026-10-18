@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A História Real de Jesus Cristo | 7 Dias com Jesus</title>
+  <meta name="description" content="Assista gratuitamente à história real de Jesus Cristo e continue a sua jornada de transformação espiritual com o programa 7 Dias com Jesus.">
+  
+  <!-- Favicon com o Novo Logo Oficial -->
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="apple-touch-icon" href="app-icon.jpg">
+  <meta property="og:image" content="logo.jpg">
+
+  <!-- Fontes Google: Cinzel (Elegância Bíblica) + Outfit (Moderna e legível) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sacred: {
+              950: '#07090e',
+              900: '#0c1017',
+              850: '#111722',
+              800: '#161f2e',
+              700: '#1f2d42',
+              gold: '#e6b747',
+              goldLight: '#fbe494',
+              goldDark: '#b28624',
+              crimson: '#8a1c14'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #080b11;
+      color: #e2e8f0;
+      scroll-behavior: smooth;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #fbe494 0%, #e6b747 50%, #b28624 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-btn {
+      background: linear-gradient(135deg, #f7d268 0%, #e5b23d 50%, #b9831c 100%);
+      box-shadow: 0 10px 25px -5px rgba(230, 183, 71, 0.35);
+      transition: all 0.3s ease;
+    }
+    .gold-btn:hover {
+      box-shadow: 0 15px 35px -5px rgba(230, 183, 71, 0.55);
+      transform: translateY(-2px);
+    }
+    .pulse-glow {
+      animation: pulse-glow 2.5s infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(230, 183, 71, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(230, 183, 71, 0.65);
+      }
+    }
+    .card-glass {
+      background: rgba(17, 23, 34, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(230, 183, 71, 0.15);
+    }
+    .card-glass-hover:hover {
+      border-color: rgba(230, 183, 71, 0.45);
+      transform: translateY(-4px);
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-500 selection:text-black antialiased overflow-x-hidden">
+
+  <!-- Barra de Notificação Superior Sagrada e Acolhedora -->
+  <div class="bg-gradient-to-r from-amber-950 via-sacred-900 to-amber-950 border-b border-amber-600/20 text-amber-200 text-xs sm:text-sm py-2 px-3 text-center flex items-center justify-center gap-2">
+    <span>🕊️ <em>“Aquietai-vos e sabei que Eu sou Deus”</em> · Uma experiência diária de paz e reflexão bíblica no seu telemóvel</span>
+  </div>
+
+  <!-- Header Superior Minimalista -->
+  <header class="py-4 px-4 sm:px-8 border-b border-white/5 bg-sacred-950/80 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="logo.svg" alt="7 Dias com Jesus Logo" class="w-10 h-10 rounded-xl shadow-md border border-amber-500/30 object-cover">
+        <div>
+          <span class="font-cinzel text-lg sm:text-xl font-bold tracking-wider text-white">7 DIAS COM JESUS</span>
+          <span class="hidden sm:inline-block text-[10px] uppercase tracking-widest text-amber-400/80 ml-2 font-medium">· Experiência Digital</span>
+        </div>
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="app.html" class="text-xs sm:text-sm font-medium text-amber-300/90 hover:text-amber-200 bg-white/5 hover:bg-white/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 transition flex items-center gap-1.5">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Entrar no App</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEÇÃO PRINCIPAL (HERO + VSL ISCA GRATUITA) -->
+  <main class="relative pt-8 pb-16 sm:pt-14 sm:pb-24">
+    <!-- Luz ambiente de fundo -->
+    <div class="absolute top-10 left-1/2 -translate-x-1/2 w-96 sm:w-[700px] h-96 sm:h-[450px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none -z-10"></div>
+    <div class="absolute top-1/2 right-10 w-72 h-72 bg-amber-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      
+      <!-- Badge de Entrada -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-medium mb-6">
+        <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+        <span>Exibição Especial Gratuita · Assista com o som ligado</span>
+      </div>
+
+      <!-- Headline Principal de Alto Impacto -->
+      <h1 class="font-cinzel text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4 tracking-tight">
+        A HISTÓRIA REAL DE <br>
+        <span class="gold-gradient">JESUS CRISTO</span>
+      </h1>
+
+      <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+        O relato bíblico e histórico que tem transformado corações ao redor do mundo. Reserve este momento de silêncio e paz para assistir ao vídeo abaixo.
+      </p>
+
+      <!-- CONTAINER DO VÍDEO (EMBED VIDALYTICS OFICIAL) -->
+      <div class="relative rounded-2xl overflow-hidden border-2 border-amber-500/30 shadow-[0_20px_60px_-15px_rgba(230,183,71,0.25)] bg-sacred-900 mb-6">
+        
+        <!-- Script e Embed Vidalytics fornecido pelo usuário -->
+        <div id="vidalytics_embed_cy2KArFNcYtVMeev" style="width: 100%; position:relative; padding-top: 56.25%;"></div>
+        <script type="text/javascript">
+        (function (v, i, d, a, l, y, t, c, s) {
+            y='_'+d.toLowerCase();c=d+'L';if(!v[d]){v[d]={};}if(!v[c]){v[c]={};}if(!v[y]){v[y]={};}var vl='Loader',vli=v[y][vl],vsl=v[c][vl + 'Script'],vlf=v[c][vl + 'Loaded'],ve='Embed';
+            if (!vsl){vsl=function(u,cb){
+                if(t){cb();return;}s=i.createElement("script");s.type="text/javascript";s.async=1;s.src=u;
+                if(s.readyState){s.onreadystatechange=function(){if(s.readyState==="loaded"||s.readyState=="complete"){s.onreadystatechange=null;vlf=1;cb();}};}else{s.onload=function(){vlf=1;cb();};}
+                i.getElementsByTagName("head")[0].appendChild(s);
+            };}
+            vsl(l+'loader.min.js',function(){if(!vli){var vlc=v[c][vl];vli=new vlc();}vli.loadScript(l+'player.min.js',function(){var vec=v[d][ve];t=new vec();t.run(a);});});
+        })(window, document, 'Vidalytics', 'vidalytics_embed_cy2KArFNcYtVMeev', 'https://fast.vidalytics.com/embeds/VetaKrZ6/cy2KArFNcYtVMeev/');
+        </script>
+        
+      </div>
+
+      <!-- Barra de Som / Aviso -->
+      <div class="flex items-center justify-center gap-2 text-xs sm:text-sm text-slate-400 mb-12">
+        <i data-lucide="volume-2" class="w-4 h-4 text-amber-400"></i>
+        <span>Por favor, coloque os fones de ouvido ou aumente o volume para uma experiência completa.</span>
+      </div>
+
+      <!-- SEÇÃO DO PITCH / TRANSIÇÃO PARA O PRODUTO DE 7 DIAS -->
+      <div id="offer-section" class="transition-all duration-700">
+        
+        <div class="relative py-8 px-6 sm:px-12 rounded-3xl bg-gradient-to-b from-sacred-850 to-sacred-900 border border-amber-500/30 shadow-2xl text-left max-w-3xl mx-auto">
+          
+          <div class="text-center mb-8">
+            <span class="inline-block uppercase tracking-widest text-xs font-bold text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20 mb-3">
+              O Que Fazer Depois de Assistir?
+            </span>
+            <h2 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-white mb-3">
+              A HISTÓRIA DE JESUS <br class="hidden sm:inline">
+              <span class="gold-gradient">NÃO TERMINA AQUI.</span>
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Depois de conhecer a Sua história, continue a descobrir os Seus ensinamentos ao longo de <strong>sete dias</strong>, através de um programa digital imersivo que funciona direto no seu telemóvel.
+            </p>
+          </div>
+
+          <!-- Grade dos Benefícios Chave -->
+          <div class="grid sm:grid-cols-2 gap-4 mb-8">
+            <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white/5 border border-white/5">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                <i data-lucide="book-open" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">7 Estudos Bíblicos Guiados</h4>
+                <p class="text-xs text-slate-400 mt-0.5">Explicações claras, acessíveis e sem complicações teológicas.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white/5 border border-white/5">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                <i data-lucide="headphones" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Vídeos e Áudios Curtos</h4>
+                <p class="text-xs text-slate-400 mt-0.5">3 a 5 minutos diários com voz serena e trilha sonora de oração.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white/5 border border-white/5">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                <i data-lucide="scroll" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Passagens Bíblicas Chave</h4>
+                <p class="text-xs text-slate-400 mt-0.5">Versículos selecionados dos Evangelhos para meditar no dia.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white/5 border border-white/5">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                <i data-lucide="smartphone" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Acesso Pelo Telemóvel</h4>
+                <p class="text-xs text-slate-400 mt-0.5">No seu ritmo, a qualquer hora do dia ou da noite, onde estiver.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- BOTÃO PRINCIPAL DE CONTINUIDADE (ESTRATÉGICO, SEM CARA DE VENDA) -->
+          <div class="text-center pt-2 border-t border-white/10">
+            <a href="#oferta" class="inline-flex items-center justify-center gap-3 w-full sm:w-auto px-8 py-4 rounded-xl font-cinzel font-bold text-sacred-950 text-base sm:text-lg gold-btn pulse-glow">
+              <span>QUERO CONTINUAR A MINHA JORNADA COM JESUS</span>
+              <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+            <div class="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-slate-400">
+              <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Acesso no Telemóvel</span>
+              <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Comece o Dia 1 Hoje Mesmo</span>
+              <span class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> Ao Seu Próprio Ritmo</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SEÇÃO DA JORNADA DOS 7 DIAS DETALHADA -->
+  <section class="py-16 sm:py-24 bg-sacred-950/70 border-t border-b border-amber-500/10">
+    <div class="max-w-5xl mx-auto px-4">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">O Caminho Sagrado</span>
+        <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">
+          Como Será a Sua <span class="gold-gradient">Jornada de 7 Dias</span>
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base">
+          Cada dia foi desenhado como um retiro espiritual de 5 minutos, unindo Palavra, oração, reflexão e áudio imersivo.
+        </p>
+      </div>
+
+      <!-- Grade dos 7 Dias -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Dia 1 -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                Dia 1
+              </span>
+              <span class="text-xs text-amber-400/80 font-medium">✨ Liberado Imediatamente</span>
+            </div>
+            <h3 class="font-cinzel text-lg font-bold text-white mb-2">O Nascimento de Jesus</h3>
+            <p class="text-xs text-amber-400/90 font-medium mb-3">Lucas 2:10-14 & Isaías 9:6</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              A origem da história, o cumprimento das profecias antigas e o mistério de Deus que escolheu uma manjedoura humilde em vez de um palácio.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+            <span>Vídeo + Devocional + Oração</span>
+            <span class="text-amber-400 font-semibold">5 min</span>
+          </div>
+        </div>
+
+        <!-- Dia 2 -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                Dia 2
+              </span>
+              <span class="text-xs text-slate-400">Módulo Prático</span>
+            </div>
+            <h3 class="font-cinzel text-lg font-bold text-white mb-2">A Mensagem de Jesus</h3>
+            <p class="text-xs text-amber-400/90 font-medium mb-3">Sermão do Monte & Parábolas</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              Os Seus ensinamentos mais profundos sobre o amor aos inimigos, a verdade sobre o Reino de Deus e como construir a vida sobre a rocha.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+            <span>Estudo Guiado + Reflexão</span>
+            <span class="text-amber-400 font-semibold">4 min</span>
+          </div>
+        </div>
+
+        <!-- Dia 3 -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                Dia 3
+              </span>
+              <span class="text-xs text-slate-400">Cura & Fé</span>
+            </div>
+            <h3 class="font-cinzel text-lg font-bold text-white mb-2">Os Milagres de Jesus</h3>
+            <p class="text-xs text-amber-400/90 font-medium mb-3">Mateus 14:14 & Marcos 5</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              Relatos comoventes dos Evangelhos: a cura dos enfermos, a tempestade acalmada e o significado espiritual da compaixão de Cristo.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+            <span>Áudio Devocional + Oração</span>
+            <span class="text-amber-400 font-semibold">5 min</span>
+          </div>
+        </div>
+
+        <!-- Dia 4 -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                Dia 4
+              </span>
+              <span class="text-xs text-slate-400">Comunhão Íntima</span>
+            </div>
+            <h3 class="font-cinzel text-lg font-bold text-white mb-2">A Última Ceia</h3>
+            <p class="text-xs text-amber-400/90 font-medium mb-3">Lucas 22:19 & João 13</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              O que aconteceu antes da prisão: o lava-pés, a nova aliança no cálice e o clamor no jardim do Getsêmani.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+            <span>Meditação + Leitura Bíblica</span>
+            <span class="text-amber-400 font-semibold">6 min</span>
+          </div>
+        </div>
+
+        <!-- Dia 5 -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                Dia 5
+              </span>
+              <span class="text-xs text-slate-400">O Sacrifício</span>
+            </div>
+            <h3 class="font-cinzel text-lg font-bold text-white mb-2">A Crucificação</h3>
+            <p class="text-xs text-amber-400/90 font-medium mb-3">Isaías 53 & Lucas 23</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              Os acontecimentos finais segundo os Evangelhos: as palavras de perdão na cruz e o amor sacrificial que cancelou toda a condenação.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+            <span>Oração de Perdão + Vídeo</span>
+            <span class="text-amber-400 font-semibold">5 min</span>
+          </div>
+        </div>
+
+        <!-- Dia 6 -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                Dia 6
+              </span>
+              <span class="text-xs text-slate-400">Vitória Absoluta</span>
+            </div>
+            <h3 class="font-cinzel text-lg font-bold text-white mb-2">A Ressurreição</h3>
+            <p class="text-xs text-amber-400/90 font-medium mb-3">Mateus 28 & 1 Coríntios 15</p>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+              O relato central da fé cristã: o túmulo vazio, a vitória sobre o medo e a morte, e a promessa viva da eternidade.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+            <span>Celebração + Reflexão</span>
+            <span class="text-amber-400 font-semibold">4 min</span>
+          </div>
+        </div>
+
+        <!-- Dia 7 (Destaque Central) -->
+        <div class="card-glass rounded-2xl p-6 card-glass-hover relative sm:col-span-2 lg:col-span-3 border-amber-500/40 bg-gradient-to-r from-sacred-850 via-sacred-900 to-sacred-850">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500 text-sacred-950">
+                  Dia 7 · O Legado
+                </span>
+                <span class="text-xs text-amber-300">A Grande Comissão e a Vida Diária</span>
+              </div>
+              <h3 class="font-cinzel text-xl font-bold text-white mb-1">Como Viver com Jesus Todos os Dias</h3>
+              <p class="text-xs sm:text-sm text-slate-300 max-w-2xl">
+                O encerramento da jornada com o envio espiritual, instruções para manter a paz interior no dia a dia e o seu <strong>Certificado Digital de Conclusão</strong> da experiência.
+              </p>
+            </div>
+            <a href="#oferta" class="shrink-0 px-6 py-3 rounded-xl gold-btn font-cinzel font-bold text-sacred-950 text-sm">
+              Continuar a Caminhada
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE PRESENTES ESPIRITUAIS COMPLEMENTARES -->
+  <section class="py-16 sm:py-20 bg-sacred-900/60">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="text-xs uppercase font-bold tracking-widest text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+          Acompanhamentos Especiais
+        </span>
+        <h2 class="font-cinzel text-2xl sm:text-4xl font-bold text-white mt-3">
+          Incluídos na Sua Experiência Digital:
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        
+        <div class="card-glass p-6 rounded-2xl text-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center mb-4">
+            <i data-lucide="shield" class="w-6 h-6"></i>
+          </div>
+          <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">ACOMPANHAMENTO 1</span>
+          <h4 class="font-cinzel text-base font-bold text-white mt-1 mb-2">Guia: Orações para Momentos Difíceis</h4>
+          <p class="text-xs text-slate-300 mb-3">Modelos de oração bíblica para ansiedade, aflição financeira e proteção da família.</p>
+          <div class="text-xs font-semibold text-amber-300/80">✨ Incluído no seu acesso</div>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl text-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center mb-4">
+            <i data-lucide="moon" class="w-6 h-6"></i>
+          </div>
+          <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">ACOMPANHAMENTO 2</span>
+          <h4 class="font-cinzel text-base font-bold text-white mt-1 mb-2">Áudios de Meditação para Dormir em Paz</h4>
+          <p class="text-xs text-slate-300 mb-3">Sons serenos com leitura de Salmos para acalmar a mente e o espírito antes do descanso.</p>
+          <div class="text-xs font-semibold text-amber-300/80">✨ Incluído no seu acesso</div>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl text-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center mb-4">
+            <i data-lucide="award" class="w-6 h-6"></i>
+          </div>
+          <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">ACOMPANHAMENTO 3</span>
+          <h4 class="font-cinzel text-base font-bold text-white mt-1 mb-2">Certificado Sagrado de Conclusão</h4>
+          <p class="text-xs text-slate-300 mb-3">Certificado personalizado com o seu nome para marcar este marco importante na sua fé.</p>
+          <div class="text-xs font-semibold text-amber-300/80">✨ Desbloqueado no 7º dia</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE DEPOIMENTOS (PROVA SOCIAL) -->
+  <section class="py-16 sm:py-24 bg-sacred-950">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-amber-400 text-xs uppercase tracking-widest font-semibold">Testemunhos Reais</span>
+        <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-white mt-2 mb-3">
+          Vidas Que Encontraram Paz
+        </h2>
+        <p class="text-slate-300 text-sm">Veja o que dizem os irmãos que já completaram os 7 Dias com Jesus:</p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        
+        <div class="card-glass p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 mb-3 text-sm">
+              ★★★★★
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 italic mb-4 leading-relaxed">
+              “Eu andava com o coração muito pesado e com noites mal dormidas por causa das contas e problemas de família. No 3º dia, ouvindo o áudio sobre os milagres, chorei e senti uma paz que há muito tempo não sentia. Recomendo a todos em Moçambique!”
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-white/5">
+            <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-sm">
+              EC
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white">Esperança C.</div>
+              <div class="text-[11px] text-slate-400">Maputo, Moçambique</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 mb-3 text-sm">
+              ★★★★★
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 italic mb-4 leading-relaxed">
+              “Muito fácil de usar pelo telemóvel! Eu não tenho muito tempo por conta do trabalho, mas 5 minutinhos pela manhã antes de sair de casa mudaram todo o meu dia. O pagamento por M-Pesa na Tutora foi super simples e o acesso caiu na hora.”
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-white/5">
+            <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-sm">
+              AM
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white">Armando M.</div>
+              <div class="text-[11px] text-slate-400">Beira, Moçambique</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-glass p-6 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex text-amber-400 mb-3 text-sm">
+              ★★★★★
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 italic mb-4 leading-relaxed">
+              “O estudo da crucificação e da ressurreição me abriu os olhos. Não é só um texto frio, é uma reflexão que toca a alma. O aplicativo no telemóvel é lindo e a trilha de oração é maravilhosa. Foi a melhor decisão espiritual que tomei este ano.”
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-3 border-t border-white/5">
+            <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-sm">
+              LT
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-white">Luísa T.</div>
+              <div class="text-[11px] text-slate-400">Nampula, Moçambique</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE CONTINUIDADE DA JORNADA (ESTRATÉGICA, FOCO EM PROPÓSITO) -->
+  <section id="oferta" class="py-16 sm:py-24 bg-gradient-to-b from-sacred-950 via-sacred-900 to-sacred-950 relative">
+    
+    <div class="max-w-3xl mx-auto px-4">
+      
+      <!-- Caixa de Convite Sagrado -->
+      <div class="relative rounded-3xl p-6 sm:p-10 bg-gradient-to-b from-sacred-850 to-sacred-950 border-2 border-amber-500/40 shadow-[0_20px_70px_-10px_rgba(230,183,71,0.25)] text-center">
+        
+        <!-- Selo Espiritual -->
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-sacred-950 text-xs sm:text-sm font-bold uppercase tracking-wider py-1.5 px-6 rounded-full shadow-lg">
+          🕊️ O SEU PRÓXIMO PASSO NA FÉ
+        </div>
+
+        <h3 class="font-cinzel text-2xl sm:text-4xl font-extrabold text-white mt-4 mb-2">
+          Como Continuar a Sua Caminhada no <br>
+          <span class="gold-gradient">7 DIAS COM JESUS</span>
+        </h3>
+        
+        <p class="text-slate-300 text-xs sm:text-base max-w-lg mx-auto mb-6 leading-relaxed">
+          Receba no seu telemóvel o acesso à jornada devocional diária com vídeos explicativos, passagens bíblicas comentadas, áudios com harpa sagrada de meditação e o seu diário de oração pessoal.
+        </p>
+
+        <!-- Lista de Inclusões da Jornada -->
+        <div class="space-y-3 max-w-md mx-auto text-left text-xs sm:text-sm text-slate-200 mb-6 p-5 rounded-2xl bg-white/5 border border-white/5">
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Acesso completo aos <strong>7 Dias de Ensinamentos</strong></span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Vídeos e Áudios curtos de 3 a 5 minutos por dia</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Passagens bíblicas explicadas com clareza e profundidade</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Perguntas práticas e Diário de Fé pessoal no telemóvel</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Todos os <strong>Acompanhamentos Especiais</strong> inclusos</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0"></i>
+            <span>Certificado Sagrado Oficial de Conclusão da Jornada</span>
+          </div>
+        </div>
+
+        <!-- Apoio Simbólico à Manutenção da Plataforma (Sem cara de comércio) -->
+        <div class="mb-7 max-w-lg mx-auto text-xs text-slate-300 bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-xl text-center leading-relaxed">
+          <span>Para mantermos este projeto ativo sem anúncios comerciais e com envio imediato para o seu telemóvel, pedimos apenas uma pequena <strong>contribuição única de manutenção de 197 MT</strong> na confirmação via Tutora (sem mensalidades recorrentes).</span>
+        </div>
+
+        <!-- Botão CTA Estratégico com Link Oficial da Tutora -->
+        <a id="btn-tutora-checkout" href="https://pay.tutora.co.mz/3c527900a74a4fa3b05bda77f5648349" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 sm:px-12 py-5 rounded-2xl font-cinzel font-bold text-sacred-950 text-base sm:text-lg gold-btn pulse-glow">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+          <span>SIM, QUERO INICIAR A MINHA JORNADA COM CRISTO</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </a>
+
+        <!-- Meios de Pagamento Oficiais da Tutora (Moçambique & Internacional) -->
+        <div class="mt-6 pt-6 border-t border-white/10">
+          <div class="text-xs text-slate-400 mb-3">Confirmação prática e segura pela plataforma Tutora:</div>
+          <div class="flex flex-wrap items-center justify-center gap-2.5 text-xs font-semibold text-slate-300">
+            <span class="px-3 py-1.5 rounded-lg bg-red-600/20 text-red-300 border border-red-500/30 flex items-center gap-1.5">
+              📱 M-Pesa
+            </span>
+            <span class="px-3 py-1.5 rounded-lg bg-orange-600/20 text-orange-300 border border-orange-500/30 flex items-center gap-1.5">
+              📱 E-Mola
+            </span>
+            <span class="px-3 py-1.5 rounded-lg bg-amber-600/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
+              🇦🇴 Multicaixa Express
+            </span>
+            <span class="px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-300 border border-blue-500/30 flex items-center gap-1.5">
+              💳 Cartão (Stripe)
+            </span>
+            <span class="px-3 py-1.5 rounded-lg bg-sky-600/20 text-sky-300 border border-sky-500/30 flex items-center gap-1.5">
+              🅿️ PayPal
+            </span>
+            <span class="px-3 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
+              🇿🇦 PayFast
+            </span>
+          </div>
+        </div>
+
+        <!-- Garantia Blindada -->
+        <div class="mt-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row items-center gap-4 text-left">
+          <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+            <i data-lucide="shield-check" class="w-7 h-7"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white text-sm">Garantia Incondicional de 7 Dias</h4>
+            <p class="text-xs text-slate-300 mt-0.5">
+              Experimente toda a jornada. Se por qualquer motivo sentir que este programa não tocou o seu coração ou não supriu as suas expectativas, basta enviar uma mensagem e devolveremos 100% do seu dinheiro. Sem perguntas.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Atalho para Testar o App Web Diretamente -->
+      <div class="mt-8 text-center">
+        <p class="text-xs text-slate-400 mb-2">Já fez a sua compra ou deseja ver a demonstração da plataforma?</p>
+        <a href="app.html" class="inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200 underline underline-offset-4 font-medium transition">
+          <i data-lucide="smartphone" class="w-4 h-4"></i>
+          <span>Abrir o Aplicativo "7 Dias com Jesus" no Telemóvel</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PERGUNTAS FREQUENTES (FAQ) -->
+  <section class="py-16 sm:py-20 bg-sacred-950 border-t border-white/5">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <span class="text-xs uppercase font-bold tracking-widest text-amber-400">Dúvidas Comuns</span>
+        <h2 class="font-cinzel text-2xl sm:text-4xl font-bold text-white mt-2">
+          Perguntas Frequentes
+        </h2>
+      </div>
+
+      <div class="space-y-4" id="faq-container">
+        
+        <details class="card-glass rounded-xl p-4 cursor-pointer group">
+          <summary class="font-semibold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Como recebo o acesso ao programa após o pagamento?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+            O acesso é 100% imediato e automático! Assim que a Tutora confirmar o seu pagamento (via M-Pesa, E-Mola ou Cartão), você recebe instantaneamente o link de acesso direto no seu WhatsApp e por E-mail. Você clica e começa no mesmo segundo.
+          </p>
+        </details>
+
+        <details class="card-glass rounded-xl p-4 cursor-pointer group">
+          <summary class="font-semibold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Preciso baixar algum aplicativo pesado no meu telemóvel?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+            Não! O programa funciona como um Web App moderno e ultraleve direto no navegador do seu telemóvel (Chrome, Safari, etc.) sem gastar a memória do seu telemóvel. Se quiser, com um toque pode adicionar o ícone à tela inicial como se fosse um app da Play Store.
+          </p>
+        </details>
+
+        <details class="card-glass rounded-xl p-4 cursor-pointer group">
+          <summary class="font-semibold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>Como pagar por M-Pesa ou E-Mola na Tutora?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+            Ao clicar no botão de inscrição, você será levado para a página de checkout da Tutora. Lá você escolhe a opção M-Pesa ou E-Mola, insere o seu número de telemóvel e receberá uma solicitação direta no visor do seu telemóvel para digitar o seu PIN e confirmar. É 100% seguro e oficial em Moçambique.
+          </p>
+        </details>
+
+        <details class="card-glass rounded-xl p-4 cursor-pointer group">
+          <summary class="font-semibold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>E se eu não tiver tempo de fazer todos os dias seguidos?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+            Não tem problema algum! O seu acesso é permanente. Você pode fazer no seu próprio ritmo: fazer 1 dia a cada semana, repetir os dias que mais tocaram seu coração ou fazer tudo no seu momento de silêncio.
+          </p>
+        </details>
+
+        <details class="card-glass rounded-xl p-4 cursor-pointer group">
+          <summary class="font-semibold text-sm sm:text-base text-white flex items-center justify-between list-none">
+            <span>O programa pertence a alguma denominação religiosa específica?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-amber-400 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-300 mt-3 pt-3 border-t border-white/5 leading-relaxed">
+            Não. É estritamente bíblico e centrado na pessoa, na graça e nos ensinamentos de Jesus Cristo relatados nos Santos Evangelhos. É indicado para qualquer pessoa que busca paz, esperança e fortalecimento da sua fé.
+          </p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ SACRO -->
+  <footer class="py-12 bg-sacred-950 border-t border-white/10 text-center text-xs text-slate-500">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-7 h-7 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center">✝</span>
+        <span class="font-cinzel text-sm font-bold text-white tracking-wider">7 DIAS COM JESUS</span>
+      </div>
+      <p class="max-w-md mx-auto mb-4 text-slate-400">
+        “Eu sou o caminho, a verdade e a vida; ninguém vem ao Pai senão por mim.” — João 14:6
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 text-slate-400 mb-6">
+        <a href="app.html" class="hover:text-amber-300 transition">Acesso ao Aplicativo</a>
+        <span>·</span>
+        <a href="#oferta" class="hover:text-amber-300 transition">Inscrição na Tutora</a>
+        <span>·</span>
+        <a href="admin.html" class="hover:text-amber-300 transition flex items-center gap-1">
+          <i data-lucide="shield" class="w-3.5 h-3.5 text-amber-400"></i> Área Admin
+        </a>
+        <span>·</span>
+        <a id="footer-whatsapp" href="https://wa.me/258840000000" target="_blank" class="hover:text-amber-300 transition flex items-center gap-1">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400"></i> Suporte WhatsApp
+        </a>
+      </div>
+      <p>© 2026 7 Dias com Jesus. Todos os direitos reservados. Processado com segurança pela plataforma Tutora.</p>
+    </div>
+  </footer>
+
+  <!-- Carrega Configurações Dinâmicas -->
+  <script src="config.js"></script>
+  <script>
+    // Inicializa ícones Lucide
+    lucide.createIcons();
+
+    // Aplica configurações do config.js
+    if (window.APP_CONFIG) {
+      const cfg = window.APP_CONFIG;
+      
+      // Atualiza link do checkout da Tutora
+      const btnCheckout = document.getElementById('btn-tutora-checkout');
+      if (btnCheckout && cfg.tutoraCheckoutUrl) {
+        btnCheckout.href = cfg.tutoraCheckoutUrl;
+      }
+
+      // Atualiza preço
+      const priceDisplay = document.getElementById('price-display');
+      const currencyDisplay = document.getElementById('currency-display');
+      if (priceDisplay && cfg.pricing) {
+        priceDisplay.textContent = cfg.pricing.amount;
+      }
+      if (currencyDisplay && cfg.pricing) {
+        currencyDisplay.textContent = cfg.pricing.currency;
+      }
+
+      // Link do WhatsApp
+      const footerWa = document.getElementById('footer-whatsapp');
+      if (footerWa && cfg.support) {
+        footerWa.href = `https://wa.me/${cfg.support.whatsappNumber}?text=${encodeURIComponent(cfg.support.whatsappMessage)}`;
+      }
+
+      // Delay de Pitch opcional
+      if (cfg.pitchDelaySeconds && cfg.pitchDelaySeconds > 0) {
+        const offerSec = document.getElementById('offer-section');
+        if (offerSec) {
+          offerSec.style.display = 'none';
+          setTimeout(() => {
+            offerSec.style.display = 'block';
+            offerSec.classList.add('animate-fade-in');
+          }, cfg.pitchDelaySeconds * 1000);
+        }
+      }
+    }
+  </script>
+</body>
+</html>

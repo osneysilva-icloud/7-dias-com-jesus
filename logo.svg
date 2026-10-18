@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Gradiente de fundo escuro sacro -->
+    <radialGradient id="bg-glow" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#182338" />
+      <stop offset="60%" stop-color="#0b101a" />
+      <stop offset="100%" stop-color="#05070b" />
+    </radialGradient>
+
+    <!-- Gradiente Dourado Celestial -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff2b3" />
+      <stop offset="30%" stop-color="#f6cf67" />
+      <stop offset="70%" stop-color="#d49b28" />
+      <stop offset="100%" stop-color="#996a12" />
+    </linearGradient>
+
+    <!-- Gradiente Dourado Suave para os Raios -->
+    <linearGradient id="ray-grad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#fbe494" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#e6b747" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Filtro de Brilho Dourado (Glow) -->
+    <filter id="sacred-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="drop-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.7" />
+    </filter>
+  </defs>
+
+  <!-- Fundo com cantos arredondados (estilo Ícone de App) -->
+  <rect width="512" height="512" rx="115" fill="url(#bg-glow)" stroke="#e6b747" stroke-width="2.5" stroke-opacity="0.25" />
+
+  <!-- Aro circular fino decorativo -->
+  <circle cx="256" cy="235" r="150" fill="none" stroke="url(#gold-grad)" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.4" />
+  <circle cx="256" cy="235" r="168" fill="none" stroke="url(#gold-grad)" stroke-width="1" opacity="0.2" />
+
+  <!-- 7 Raios Sagrados (Representando os 7 Dias da Criação / 7 Dias com Jesus) -->
+  <g opacity="0.65" filter="url(#sacred-glow)">
+    <!-- Raio 1 (-45°) -->
+    <line x1="256" y1="235" x2="140" y2="120" stroke="url(#ray-grad)" stroke-width="3" stroke-linecap="round" />
+    <!-- Raio 2 (-30°) -->
+    <line x1="256" y1="235" x2="185" y2="95" stroke="url(#ray-grad)" stroke-width="3" stroke-linecap="round" />
+    <!-- Raio 3 (-15°) -->
+    <line x1="256" y1="235" x2="225" y2="75" stroke="url(#ray-grad)" stroke-width="3" stroke-linecap="round" />
+    <!-- Raio 4 (Centro 0°) -->
+    <line x1="256" y1="235" x2="256" y2="65" stroke="url(#ray-grad)" stroke-width="4" stroke-linecap="round" />
+    <!-- Raio 5 (+15°) -->
+    <line x1="256" y1="235" x2="287" y2="75" stroke="url(#ray-grad)" stroke-width="3" stroke-linecap="round" />
+    <!-- Raio 6 (+30°) -->
+    <line x1="256" y1="235" x2="327" y2="95" stroke="url(#ray-grad)" stroke-width="3" stroke-linecap="round" />
+    <!-- Raio 7 (+45°) -->
+    <line x1="256" y1="235" x2="372" y2="120" stroke="url(#ray-grad)" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- Aura central de luz dourada -->
+  <circle cx="256" cy="210" r="48" fill="#fbe494" opacity="0.18" filter="url(#sacred-glow)" />
+
+  <!-- A Cruz Dourada Majestosa -->
+  <g filter="url(#drop-shadow)">
+    <!-- Haste Vertical -->
+    <path d="M 241,110 
+             L 271,110 
+             L 271,345 
+             L 256,365 
+             L 241,345 Z" 
+          fill="url(#gold-grad)" />
+
+    <!-- Haste Horizontal -->
+    <path d="M 170,185 
+             L 342,185 
+             L 342,215 
+             L 170,215 Z" 
+          fill="url(#gold-grad)" />
+
+    <!-- Detalhe em Bisel de Luz no Centro da Cruz -->
+    <polygon points="256,120 264,192 332,200 264,208 256,335 248,208 180,200 248,192" 
+             fill="#ffffff" opacity="0.45" />
+
+    <!-- Diamante Central Sagrado -->
+    <polygon points="256,188 268,200 256,212 244,200" 
+             fill="#ffffff" />
+  </g>
+
+  <!-- Ramo de Oliveira / Pomba Simbólica da Paz (Base da Cruz) -->
+  <g opacity="0.75" stroke="url(#gold-grad)" stroke-width="1.8" fill="none" stroke-linecap="round">
+    <!-- Folha esquerda -->
+    <path d="M 230,345 Q 210,340 200,325 Q 215,325 235,338" fill="url(#gold-grad)" opacity="0.3" />
+    <!-- Folha direita -->
+    <path d="M 282,345 Q 302,340 312,325 Q 297,325 277,338" fill="url(#gold-grad)" opacity="0.3" />
+  </g>
+
+  <!-- Tipografia do Logo na Base -->
+  <text x="256" y="420" 
+        text-anchor="middle" 
+        font-family="'Cinzel', 'Trajan Pro', 'Georgia', serif" 
+        font-size="28" 
+        font-weight="800" 
+        letter-spacing="5" 
+        fill="url(#gold-grad)" 
+        filter="url(#drop-shadow)">
+    7 DIAS COM JESUS
+  </text>
+
+  <text x="256" y="445" 
+        text-anchor="middle" 
+        font-family="'Outfit', 'Helvetica Neue', sans-serif" 
+        font-size="12" 
+        font-weight="600" 
+        letter-spacing="8" 
+        fill="#a0aec0" 
+        opacity="0.85">
+    JORNADA SAGRADA
+  </text>
+</svg>

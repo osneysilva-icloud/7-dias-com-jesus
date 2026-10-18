@@ -1,0 +1,23 @@
+{
+  "name": "7-dias-com-jesus",
+  "version": "1.0.0",
+  "description": "App e Funil de Alta Conversão - 7 Dias com Jesus (Tutora)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "vsl",
+    "saas",
+    "religioso",
+    "tutora",
+    "jesus",
+    "7dias"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
+    "dotenv": "^18.0.8"
+  }
+}

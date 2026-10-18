@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Aplicativo | 7 Dias com Jesus</title>
+  
+  <!-- Favicon Oficial -->
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="apple-touch-icon" href="app-icon.jpg">
+
+  <!-- Fontes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sacred: {
+              950: '#06080d',
+              900: '#0b0f17',
+              850: '#101622',
+              800: '#162030',
+              700: '#1e2c42',
+              gold: '#e6b747',
+              goldLight: '#fbe494',
+              goldDark: '#b28624'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Canvas Confetti para celebração do 7º dia -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #06080d;
+      color: #e2e8f0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #fbe494 0%, #e6b747 50%, #b28624 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card-glass {
+      background: rgba(16, 22, 34, 0.85);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(230, 183, 71, 0.16);
+    }
+    .gold-btn {
+      background: linear-gradient(135deg, #f7d268 0%, #e5b23d 50%, #b9831c 100%);
+      box-shadow: 0 8px 20px -4px rgba(230, 183, 71, 0.3);
+      transition: all 0.25s ease;
+    }
+    .gold-btn:active {
+      transform: scale(0.98);
+    }
+    /* Estilização da barra de rolagem dos dias */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="antialiased pb-24">
+
+  <!-- CABEÇALHO DO APP MOBILE-FIRST -->
+  <header class="sticky top-0 z-40 bg-sacred-950/95 backdrop-blur-md border-b border-white/10 px-4 py-3">
+    <div class="max-w-2xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <a href="index.html" title="Voltar à Página Principal" class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        </a>
+        <img src="logo.svg" alt="Logo" class="w-8 h-8 rounded-lg border border-amber-500/30 object-cover">
+        <div>
+          <h1 class="font-cinzel text-base sm:text-lg font-bold text-white flex items-center gap-1.5">
+            <span>7 DIAS COM JESUS</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block animate-ping"></span>
+          </h1>
+          <p class="text-[11px] text-amber-300/80 font-medium" id="header-status-text">Dia 1 de 7 · Comece a sua jornada</p>
+        </div>
+      </div>
+      
+      <!-- Progresso Geral -->
+      <div class="flex items-center gap-2">
+        <div class="text-right">
+          <span class="text-xs font-bold text-amber-400 font-cinzel" id="progress-percent">0%</span>
+          <span class="block text-[10px] text-slate-400">Completo</span>
+        </div>
+        <div class="w-8 h-8 rounded-full border-2 border-amber-500/30 flex items-center justify-center text-amber-400 text-xs font-bold bg-amber-500/10">
+          ✝
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Progresso Fina no Topo -->
+    <div class="w-full bg-slate-800 h-1.5 mt-2 rounded-full overflow-hidden max-w-2xl mx-auto">
+      <div id="progress-bar-fill" class="bg-gradient-to-r from-amber-500 to-amber-300 h-full w-0 transition-all duration-500"></div>
+    </div>
+  </header>
+
+  <!-- SELETOR HORIZONTAL DOS 7 DIAS (CARROSSEL INTERATIVO) -->
+  <div class="bg-sacred-900/90 border-b border-white/5 py-3 px-4">
+    <div class="max-w-2xl mx-auto">
+      <div class="flex items-center gap-2.5 overflow-x-auto no-scrollbar py-1" id="days-selector-bar">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL DO DIA SELECIONADO -->
+  <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- CARD DO TÍTULO E TEMA DO DIA -->
+    <div class="card-glass rounded-3xl p-6 relative overflow-hidden">
+      <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex items-center justify-between mb-3">
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-wider" id="day-badge">
+          Dia 1 de 7
+        </span>
+        <div class="flex items-center gap-1.5 text-xs text-slate-400">
+          <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span id="day-duration">5 minutos</span>
+        </div>
+      </div>
+
+      <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white mb-1" id="day-title">
+        O Nascimento de Jesus
+      </h2>
+      <p class="text-amber-400/90 text-sm font-medium mb-3" id="day-subtitle">
+        A Esperança que Rompeu o Silêncio
+      </p>
+      <p class="text-xs text-slate-400 border-l-2 border-amber-500/50 pl-2.5" id="day-theme">
+        Origem, Contexto e Profecias Cumpridas
+      </p>
+    </div>
+
+    <!-- PLAYER DE ÁUDIO SAGRADO & MEDITAÇÃO AMBIENTE -->
+    <div class="card-glass rounded-2xl p-5 border-amber-500/30 bg-gradient-to-br from-sacred-850 to-sacred-900">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <i data-lucide="music" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Momento de Oração & Trilha Sagrada</h4>
+            <p class="text-[11px] text-slate-400">Harpa Celestial Ambiente em Tempo Real</p>
+          </div>
+        </div>
+        <span class="text-[10px] font-semibold text-amber-300 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+          AO VIVO
+        </span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center gap-3 pt-2 border-t border-white/5">
+        <!-- Botão de Tocar Harpa Celestial -->
+        <button id="btn-toggle-ambient" class="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white transition">
+          <i data-lucide="volume-2" class="w-4 h-4 text-amber-400" id="ambient-icon"></i>
+          <span id="ambient-btn-text">Ativar Harpa Celestial de Fundo</span>
+        </button>
+
+        <!-- Botão de Ouvir Devocional em Áudio -->
+        <button id="btn-narrate-devotional" class="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-xs font-semibold text-amber-300 transition">
+          <i data-lucide="play" class="w-4 h-4 text-amber-400" id="narrate-icon"></i>
+          <span id="narrate-btn-text">Ouvir Reflexão Guiada</span>
+        </button>
+      </div>
+      <div class="mt-2 text-[10px] text-center text-slate-400 italic">
+        💡 Toque para meditar ouvindo uma suave melodia bíblica enquanto lê o devocional.
+      </div>
+    </div>
+
+    <!-- PASSAGEM BÍBLICA DO DIA -->
+    <div class="card-glass rounded-2xl p-6 border-l-4 border-amber-400 bg-sacred-850/90">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+          <i data-lucide="book" class="w-4 h-4"></i>
+          <span id="day-bible-ref">Lucas 2:10-14 & Isaías 9:6</span>
+        </span>
+        <button id="btn-copy-verse" class="text-xs text-slate-400 hover:text-amber-300 flex items-center gap-1 transition" title="Copiar Versículo">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span>Copiar</span>
+        </button>
+      </div>
+      <blockquote class="text-sm sm:text-base text-slate-200 font-serif italic leading-relaxed" id="day-bible-passage">
+        “Porque um menino nos nasceu, um filho se nos deu; e o governo estará sobre os seus ombros...”
+      </blockquote>
+    </div>
+
+    <!-- TEXTO DEVOCIONAL COMPLETO -->
+    <div class="card-glass rounded-2xl p-6 sm:p-7 space-y-4">
+      <div class="flex items-center gap-2 pb-2 border-b border-white/5">
+        <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+          <i data-lucide="sparkle" class="w-4 h-4"></i>
+        </div>
+        <h3 class="font-cinzel text-lg font-bold text-white">Reflexão do Dia</h3>
+      </div>
+      
+      <div class="text-sm sm:text-base text-slate-300 leading-relaxed space-y-4 font-light whitespace-pre-line" id="day-devotional-text">
+        <!-- Inserido dinamicamente -->
+      </div>
+    </div>
+
+    <!-- PERGUNTA DE REFLEXÃO E DIÁRIO DE FÉ PESSOAL -->
+    <div class="card-glass rounded-2xl p-6 space-y-4 bg-sacred-850/95 border-amber-500/25">
+      <div class="flex items-center justify-between pb-2 border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+            <i data-lucide="pen-tool" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-cinzel text-base sm:text-lg font-bold text-white">Seu Diário de Fé</h3>
+        </div>
+        <span class="text-[10px] text-amber-400/90 font-medium bg-amber-500/10 px-2 py-0.5 rounded-full">
+          Privado & Seguro
+        </span>
+      </div>
+
+      <div class="p-3.5 rounded-xl bg-white/5 border border-white/5">
+        <span class="text-xs font-semibold text-amber-300 block mb-1">Pergunta para o seu coração:</span>
+        <p class="text-xs sm:text-sm text-slate-200 italic" id="day-reflection-question">
+          Em que área da sua vida você precisa permitir que a paz de Cristo renasça hoje?
+        </p>
+      </div>
+
+      <div>
+        <textarea id="diary-input" rows="4" placeholder="Escreva aqui a sua oração, reflexão ou o que Deus colocou no seu coração hoje..." class="w-full bg-sacred-950 border border-white/10 rounded-xl p-3.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition resize-none"></textarea>
+        
+        <div class="flex items-center justify-between mt-2">
+          <span class="text-[11px] text-emerald-400 hidden" id="diary-saved-feedback">
+            ✓ Guardado no seu telemóvel!
+          </span>
+          <button id="btn-save-diary" class="ml-auto px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-amber-300 transition flex items-center gap-1.5">
+            <i data-lucide="save" class="w-3.5 h-3.5"></i>
+            <span>Guardar no Diário</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORAÇÃO DO DIA GUIADA -->
+    <div class="card-glass rounded-2xl p-6 bg-gradient-to-br from-sacred-900 via-sacred-850 to-sacred-900 border-amber-500/30">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-lg">🙏</span>
+        <h3 class="font-cinzel text-base sm:text-lg font-bold text-white">Oração do Dia</h3>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-300 italic leading-relaxed mb-4" id="day-prayer">
+        Senhor Deus, Pai de amor, agradeço-Te por teres enviado Teu único Filho Jesus a este mundo com tanta humildade...
+      </p>
+      <div class="text-[11px] text-slate-400 text-center">
+        “Orai sem cessar.” — 1 Tessalonicenses 5:17
+      </div>
+    </div>
+
+    <!-- BOTÕES DE NAVEGAÇÃO E CONCLUSÃO DO DIA -->
+    <div class="pt-4 pb-10 space-y-3">
+      
+      <!-- Botão de Concluir Dia -->
+      <button id="btn-complete-day" class="w-full py-4 rounded-2xl font-cinzel font-bold text-sacred-950 text-base sm:text-lg gold-btn flex items-center justify-center gap-2">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <span id="complete-btn-text">CONCLUIR DIA 1 COM CRISTO</span>
+      </button>
+
+      <!-- Botões Anterior / Próximo -->
+      <div class="flex items-center justify-between gap-3 pt-2">
+        <button id="btn-prev-day" class="flex-1 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-slate-300 transition flex items-center justify-center gap-1.5">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <span>Dia Anterior</span>
+        </button>
+
+        <button id="btn-next-day" class="flex-1 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-semibold text-amber-300 transition flex items-center justify-center gap-1.5">
+          <span>Próximo Dia</span>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Botão Compartilhar Bênção no WhatsApp -->
+      <div class="text-center pt-2">
+        <button id="btn-share-whatsapp" class="inline-flex items-center gap-2 text-xs text-emerald-400 hover:text-emerald-300 transition">
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          <span>Partilhar o versículo de hoje com alguém no WhatsApp</span>
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- MODAL DO CERTIFICADO OFICIAL DE CONCLUSÃO (DESBLOQUEADO NO DIA 7) -->
+  <div id="certificate-modal" class="fixed inset-0 z-50 bg-sacred-950/90 backdrop-blur-md p-4 hidden flex items-center justify-center overflow-y-auto">
+    <div class="card-glass max-w-lg w-full rounded-3xl p-6 sm:p-8 border-2 border-amber-500/60 shadow-[0_0_50px_rgba(230,183,71,0.3)] text-center my-8">
+      
+      <div class="w-16 h-16 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center mx-auto mb-4 border border-amber-500/40">
+        <i data-lucide="award" class="w-9 h-9"></i>
+      </div>
+
+      <span class="text-xs font-bold text-amber-400 tracking-widest uppercase">CONQUISTA ESPIRITUAL</span>
+      
+      <h3 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white mt-1 mb-2">
+        Parabéns! Jornada Concluída!
+      </h3>
+      
+      <p class="text-xs sm:text-sm text-slate-300 mb-6">
+        Você completou os 7 Dias com Jesus e deu um passo profundo na sua caminhada de fé e intimidade com Deus.
+      </p>
+
+      <!-- Cartão Estilizado de Certificado -->
+      <div class="p-6 rounded-2xl bg-sacred-900 border border-amber-500/30 text-center mb-6 relative">
+        <div class="text-[10px] uppercase font-bold text-amber-400 tracking-wider">CERTIFICADO SAGRADO</div>
+        <div class="font-cinzel text-xl sm:text-2xl font-bold text-white mt-2">7 DIAS COM JESUS</div>
+        <div class="text-xs text-slate-300 mt-2 mb-3">Conferido ao servo(a) da Palavra pela conclusão dos 7 estudos e orações guiadas.</div>
+        
+        <input type="text" id="cert-name-input" placeholder="Digite o seu nome completo..." class="w-full bg-sacred-950 border border-amber-500/40 rounded-xl px-4 py-2.5 text-center text-sm font-semibold text-amber-300 focus:outline-none mb-3">
+
+        <div class="text-[11px] text-slate-400 flex items-center justify-between pt-3 border-t border-white/10">
+          <span>Data: <span id="cert-date">18/10/2026</span></span>
+          <span class="text-amber-400 font-bold">✝ Em Cristo Jesus</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2.5">
+        <button id="btn-print-cert" class="w-full py-3.5 rounded-xl gold-btn font-cinzel font-bold text-sacred-950 text-sm flex items-center justify-center gap-2">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Imprimir ou Salvar Certificado</span>
+        </button>
+        <button id="btn-close-cert" class="w-full py-2.5 text-xs text-slate-400 hover:text-white transition">
+          Fechar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Carrega Dados da Jornada e SDK do Supabase -->
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Lógica da Aplicação SaaS -->
+  <script>
+    // Inicialização do Supabase Client
+    let supabaseClient = null;
+    let userDeviceId = localStorage.getItem('7dias_device_id');
+    if (!userDeviceId) {
+      userDeviceId = 'user_' + Math.random().toString(36).substring(2, 11) + '_' + Date.now();
+      localStorage.setItem('7dias_device_id', userDeviceId);
+    }
+
+    if (window.APP_CONFIG && window.APP_CONFIG.supabase && window.supabase) {
+      try {
+        supabaseClient = window.supabase.createClient(
+          window.APP_CONFIG.supabase.url,
+          window.APP_CONFIG.supabase.anonKey
+        );
+        console.log('✝ Supabase conectado com sucesso no App!');
+      } catch (e) {
+        console.warn('Supabase offline ou indisponível:', e);
+      }
+    }
+
+    // Estado local da Aplicação
+    const AppState = {
+      currentDay: 1,
+      completedDays: JSON.parse(localStorage.getItem('7dias_completed') || '[]'),
+      diaryNotes: JSON.parse(localStorage.getItem('7dias_diary') || '{}'),
+      isAmbientPlaying: false,
+      isNarrating: false,
+      audioCtx: null,
+      ambientOscillators: []
+    };
+
+    const journeyData = window.APP_CONFIG.journeyData;
+
+    // Inicialização do App
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderDaysSelector();
+      loadDayContent(AppState.currentDay);
+      updateOverallProgress();
+      setupAudioEngine();
+      setupEventListeners();
+      syncWithSupabase();
+    });
+
+    // Sincronização com Supabase (Carrega progresso salvo em nuvem)
+    async function syncWithSupabase() {
+      if (!supabaseClient) return;
+      try {
+        const { data: progressData } = await supabaseClient
+          .from('user_progress')
+          .select('day, completed')
+          .eq('phone', userDeviceId);
+
+        if (progressData && progressData.length > 0) {
+          progressData.forEach(p => {
+            if (p.completed && !AppState.completedDays.includes(p.day)) {
+              AppState.completedDays.push(p.day);
+            }
+          });
+          localStorage.setItem('7dias_completed', JSON.stringify(AppState.completedDays));
+          renderDaysSelector();
+          updateOverallProgress();
+        }
+
+        const { data: diaryData } = await supabaseClient
+          .from('user_diary')
+          .select('day, reflection')
+          .eq('phone', userDeviceId);
+
+        if (diaryData && diaryData.length > 0) {
+          diaryData.forEach(d => {
+            if (d.reflection && !AppState.diaryNotes[d.day]) {
+              AppState.diaryNotes[d.day] = d.reflection;
+            }
+          });
+          localStorage.setItem('7dias_diary', JSON.stringify(AppState.diaryNotes));
+          const diaryInput = document.getElementById('diary-input');
+          if (diaryInput && AppState.diaryNotes[AppState.currentDay]) {
+            diaryInput.value = AppState.diaryNotes[AppState.currentDay];
+          }
+        }
+      } catch (err) {
+        console.warn('Sincronização em segundo plano:', err.message);
+      }
+    }
+
+    // Renderiza a barra horizontal de dias
+    function renderDaysSelector() {
+      const container = document.getElementById('days-selector-bar');
+      container.innerHTML = '';
+
+      journeyData.forEach(item => {
+        const isCompleted = AppState.completedDays.includes(item.day);
+        const isActive = AppState.currentDay === item.day;
+
+        const button = document.createElement('button');
+        button.className = `shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition ${
+          isActive 
+            ? 'bg-amber-500 text-sacred-950 shadow-md font-bold' 
+            : isCompleted 
+              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' 
+              : 'bg-white/5 text-slate-300 hover:bg-white/10 border border-white/5'
+        }`;
+        
+        button.innerHTML = `
+          <span>Dia ${item.day}</span>
+          ${isCompleted ? '<span class="text-emerald-400 text-xs">✓</span>' : ''}
+        `;
+
+        button.addEventListener('click', () => {
+          loadDayContent(item.day);
+        });
+
+        container.appendChild(button);
+      });
+    }
+
+    // Carrega o conteúdo de um dia específico
+    function loadDayContent(dayNumber) {
+      AppState.currentDay = dayNumber;
+      const data = journeyData.find(d => d.day === dayNumber);
+      if (!data) return;
+
+      // Se estiver narrando, parar
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        AppState.isNarrating = false;
+        updateNarrateButton();
+      }
+
+      // Atualiza textos
+      document.getElementById('day-badge').textContent = `Dia ${data.day} de 7`;
+      document.getElementById('day-duration').textContent = data.durationMinutes;
+      document.getElementById('day-title').textContent = data.title;
+      document.getElementById('day-subtitle').textContent = data.subtitle;
+      document.getElementById('day-theme').textContent = data.theme;
+      document.getElementById('day-bible-ref').textContent = data.bibleReference;
+      document.getElementById('day-bible-passage').textContent = data.biblePassage;
+      document.getElementById('day-devotional-text').textContent = data.devotionalText;
+      document.getElementById('day-reflection-question').textContent = data.reflectionQuestion;
+      document.getElementById('day-prayer').textContent = data.prayer;
+
+      // Carrega anotação do diário deste dia
+      const diaryInput = document.getElementById('diary-input');
+      diaryInput.value = AppState.diaryNotes[data.day] || '';
+      document.getElementById('diary-saved-feedback').classList.add('hidden');
+
+      // Botão Concluir
+      const isCompleted = AppState.completedDays.includes(data.day);
+      const completeBtnText = document.getElementById('complete-btn-text');
+      const completeBtn = document.getElementById('btn-complete-day');
+      
+      if (isCompleted) {
+        completeBtnText.textContent = `DIA ${data.day} CONCLUÍDO ✓`;
+        completeBtn.classList.remove('gold-btn');
+        completeBtn.classList.add('bg-emerald-600/30', 'text-emerald-300', 'border', 'border-emerald-500/40');
+      } else {
+        completeBtnText.textContent = `CONCLUIR DIA ${data.day} COM CRISTO`;
+        completeBtn.classList.add('gold-btn');
+        completeBtn.classList.remove('bg-emerald-600/30', 'text-emerald-300', 'border', 'border-emerald-500/40');
+      }
+
+      // Atualiza estado dos botões Anterior/Próximo
+      document.getElementById('btn-prev-day').disabled = dayNumber === 1;
+      document.getElementById('btn-prev-day').classList.toggle('opacity-50', dayNumber === 1);
+      
+      document.getElementById('btn-next-day').disabled = dayNumber === 7;
+      document.getElementById('btn-next-day').classList.toggle('opacity-50', dayNumber === 7);
+
+      renderDaysSelector();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    // Atualiza barra de progresso geral
+    function updateOverallProgress() {
+      const total = journeyData.length;
+      const completed = AppState.completedDays.length;
+      const percent = Math.round((completed / total) * 100);
+
+      document.getElementById('progress-percent').textContent = `${percent}%`;
+      document.getElementById('progress-bar-fill').style.width = `${percent}%`;
+
+      const headerText = document.getElementById('header-status-text');
+      if (completed === 0) {
+        headerText.textContent = `Dia ${AppState.currentDay} de 7 · Comece a sua jornada`;
+      } else if (completed === 7) {
+        headerText.textContent = `✝ Parabéns! Jornada Completa (7/7)`;
+      } else {
+        headerText.textContent = `${completed} de 7 dias concluídos · Continue firme!`;
+      }
+    }
+
+    // SISTEMA DE ÁUDIO HARPA CELESTIAL EM TEMPO REAL (Web Audio API)
+    function setupAudioEngine() {
+      const btnAmbient = document.getElementById('btn-toggle-ambient');
+      const ambientIcon = document.getElementById('ambient-icon');
+      const ambientText = document.getElementById('ambient-btn-text');
+
+      btnAmbient.addEventListener('click', () => {
+        if (!AppState.isAmbientPlaying) {
+          startAmbientHarp();
+          AppState.isAmbientPlaying = true;
+          ambientText.textContent = "Pausar Harpa Celestial";
+          btnAmbient.classList.add('bg-amber-500/20', 'border-amber-500/40');
+        } else {
+          stopAmbientHarp();
+          AppState.isAmbientPlaying = false;
+          ambientText.textContent = "Ativar Harpa Celestial de Fundo";
+          btnAmbient.classList.remove('bg-amber-500/20', 'border-amber-500/40');
+        }
+      });
+    }
+
+    function startAmbientHarp() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        AppState.audioCtx = new AudioContext();
+        
+        // Acorde celestial místico suave (Frequências de cura e paz: Ré maior sagrado)
+        const notes = [293.66, 369.99, 440.00, 587.33, 739.99]; // D4, F#4, A4, D5, F#5
+        
+        AppState.ambientOscillators = notes.map((freq, i) => {
+          const osc = AppState.audioCtx.createOscillator();
+          const gain = AppState.audioCtx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, AppState.audioCtx.currentTime);
+          
+          // Modulação sutil de vibrato
+          const lfo = AppState.audioCtx.createOscillator();
+          lfo.frequency.value = 0.2 + (i * 0.1);
+          const lfoGain = AppState.audioCtx.createGain();
+          lfoGain.gain.value = 1.2;
+          lfo.connect(osc.frequency);
+          lfo.start();
+
+          // Volume suave relaxante
+          gain.gain.setValueAtTime(0.015, AppState.audioCtx.currentTime);
+          
+          osc.connect(gain);
+          gain.connect(AppState.audioCtx.destination);
+          osc.start();
+          return osc;
+        });
+      } catch (e) {
+        console.warn("AudioContext não pôde iniciar:", e);
+      }
+    }
+
+    function stopAmbientHarp() {
+      if (AppState.audioCtx) {
+        try {
+          AppState.ambientOscillators.forEach(osc => osc.stop());
+          AppState.audioCtx.close();
+        } catch (e) {}
+      }
+    }
+
+    // SÍNTESE DE VOZ PARA O DEVOCIONAL
+    function setupEventListeners() {
+      // Narração Guiada
+      const btnNarrate = document.getElementById('btn-narrate-devotional');
+      btnNarrate.addEventListener('click', toggleNarrateDevotional);
+
+      // Salvar Diário
+      document.getElementById('btn-save-diary').addEventListener('click', () => {
+        const text = document.getElementById('diary-input').value;
+        AppState.diaryNotes[AppState.currentDay] = text;
+        localStorage.setItem('7dias_diary', JSON.stringify(AppState.diaryNotes));
+        
+        // Sincroniza em nuvem com o Supabase
+        if (supabaseClient) {
+          supabaseClient
+            .from('user_diary')
+            .upsert({
+              phone: userDeviceId,
+              day: AppState.currentDay,
+              reflection: text,
+              updated_at: new Date().toISOString()
+            }, { onConflict: 'phone,day' })
+            .then(() => console.log('Diário sincronizado com o Supabase'))
+            .catch(e => console.warn('Erro ao sincronizar diário:', e));
+        }
+
+        const feedback = document.getElementById('diary-saved-feedback');
+        feedback.classList.remove('hidden');
+        setTimeout(() => feedback.classList.add('hidden'), 3500);
+      });
+
+      // Copiar Versículo
+      document.getElementById('btn-copy-verse').addEventListener('click', () => {
+        const verse = document.getElementById('day-bible-passage').textContent.trim();
+        const ref = document.getElementById('day-bible-ref').textContent.trim();
+        const textToCopy = `${verse} (${ref}) — App 7 Dias com Jesus`;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          alert("Versículo copiado com sucesso! Você pode colá-lo onde quiser.");
+        });
+      });
+
+      // Compartilhar WhatsApp
+      document.getElementById('btn-share-whatsapp').addEventListener('click', () => {
+        const currentData = journeyData.find(d => d.day === AppState.currentDay);
+        const text = `📖 *7 Dias com Jesus — Dia ${currentData.day}: ${currentData.title}*\n\n"${currentData.biblePassage}" (${currentData.bibleReference})\n\nVenha também fazer esta jornada de fé!`;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+      });
+
+      // Botão Concluir Dia
+      document.getElementById('btn-complete-day').addEventListener('click', () => {
+        if (!AppState.completedDays.includes(AppState.currentDay)) {
+          AppState.completedDays.push(AppState.currentDay);
+          localStorage.setItem('7dias_completed', JSON.stringify(AppState.completedDays));
+          
+          // Sincroniza em nuvem com o Supabase
+          if (supabaseClient) {
+            supabaseClient
+              .from('user_progress')
+              .upsert({
+                phone: userDeviceId,
+                day: AppState.currentDay,
+                completed: true,
+                completed_at: new Date().toISOString()
+              }, { onConflict: 'phone,day' })
+              .then(() => console.log('Progresso sincronizado com o Supabase'))
+              .catch(e => console.warn('Erro ao sincronizar progresso:', e));
+          }
+
+          // Efeito de celebração
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#e6b747', '#fbe494', '#ffffff']
+          });
+
+          updateOverallProgress();
+          loadDayContent(AppState.currentDay);
+
+          // Se concluiu o 7º dia, abrir modal de certificado!
+          if (AppState.currentDay === 7 || AppState.completedDays.length === 7) {
+            setTimeout(openCertificateModal, 800);
+          } else if (AppState.currentDay < 7) {
+            setTimeout(() => {
+              if (confirm(`Parabéns! Dia ${AppState.currentDay} concluído com sucesso. Deseja avançar para o Dia ${AppState.currentDay + 1}?`)) {
+                loadDayContent(AppState.currentDay + 1);
+              }
+            }, 600);
+          }
+        }
+      });
+
+      // Navegação Anterior / Próximo
+      document.getElementById('btn-prev-day').addEventListener('click', () => {
+        if (AppState.currentDay > 1) {
+          loadDayContent(AppState.currentDay - 1);
+        }
+      });
+
+      document.getElementById('btn-next-day').addEventListener('click', () => {
+        if (AppState.currentDay < 7) {
+          loadDayContent(AppState.currentDay + 1);
+        }
+      });
+
+      // Modal do Certificado
+      document.getElementById('btn-close-cert').addEventListener('click', () => {
+        document.getElementById('certificate-modal').classList.add('hidden');
+      });
+
+      document.getElementById('btn-print-cert').addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    function toggleNarrateDevotional() {
+      if (!('speechSynthesis' in window)) {
+        alert("O seu navegador não suporta narração de áudio nativa.");
+        return;
+      }
+
+      if (AppState.isNarrating) {
+        window.speechSynthesis.cancel();
+        AppState.isNarrating = false;
+        updateNarrateButton();
+      } else {
+        const currentData = journeyData.find(d => d.day === AppState.currentDay);
+        const textToRead = `${currentData.title}. ${currentData.subtitle}. Passagem bíblica: ${currentData.biblePassage}. Reflexão: ${currentData.devotionalText}. Oração: ${currentData.prayer}`;
+
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'pt-PT'; // Português
+        utterance.rate = 0.92; // Ritmo mais calmo e devocional
+        utterance.pitch = 1.0;
+
+        utterance.onend = () => {
+          AppState.isNarrating = false;
+          updateNarrateButton();
+        };
+
+        utterance.onerror = () => {
+          AppState.isNarrating = false;
+          updateNarrateButton();
+        };
+
+        window.speechSynthesis.speak(utterance);
+        AppState.isNarrating = true;
+        updateNarrateButton();
+      }
+    }
+
+    function updateNarrateButton() {
+      const text = document.getElementById('narrate-btn-text');
+      const icon = document.getElementById('narrate-icon');
+      if (AppState.isNarrating) {
+        text.textContent = "Pausar Leitura Guiada";
+        icon.setAttribute('data-lucide', 'pause');
+      } else {
+        text.textContent = "Ouvir Reflexão Guiada";
+        icon.setAttribute('data-lucide', 'play');
+      }
+      lucide.createIcons();
+    }
+
+    function openCertificateModal() {
+      const modal = document.getElementById('certificate-modal');
+      const dateSpan = document.getElementById('cert-date');
+      const today = new Date();
+      dateSpan.textContent = today.toLocaleDateString('pt-PT');
+      modal.classList.remove('hidden');
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.5 }
+      });
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

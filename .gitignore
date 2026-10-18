@@ -1,0 +1,16 @@
+# Dependências
+node_modules/
+package-lock.json
+
+# Ambiente e Chaves Sensíveis
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
