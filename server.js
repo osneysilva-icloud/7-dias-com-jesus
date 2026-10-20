@@ -235,3 +235,5 @@ server.listen(PORT, () => {
   console.log(`📊 Status da Conexão: http://localhost:${PORT}/api/status`);
   console.log(`=======================================================`);
 });
+
+module.exports = server;
