@@ -858,6 +858,25 @@
       if (regEmailInput) {
         regEmailInput.addEventListener('blur', (e) => checkEmailPurchased(e.target.value.trim()));
       }
+
+      // Suporte a redirecionamento pós-pagamento da Tutora com parâmetros opcionais
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramEmail = urlParams.get('email') || urlParams.get('customer_email');
+      const paramName = urlParams.get('name') || urlParams.get('customer_name');
+      const paramPhone = urlParams.get('phone') || urlParams.get('customer_phone');
+
+      if (paramEmail && regEmailInput && !currentClientUser) {
+        regEmailInput.value = paramEmail.trim();
+        if (paramName) {
+          const nameInput = document.getElementById('reg-name');
+          if (nameInput) nameInput.value = paramName.trim();
+        }
+        if (paramPhone) {
+          const phoneInput = document.getElementById('reg-phone');
+          if (phoneInput) phoneInput.value = paramPhone.replace(/\D/g, '');
+        }
+        checkEmailPurchased(paramEmail.trim());
+      }
     });
 
     // Sincronização com Supabase (Carrega progresso salvo em nuvem)
