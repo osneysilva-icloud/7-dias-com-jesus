@@ -9,12 +9,25 @@ Um aplicativo web e funil de alta conversão estruturado para transformar a curi
 ```text
 ├── index.html         # Landing Page de Alta Conversão com VSL (Vidalytics) + Oferta 197 MT
 ├── app.html           # Web App PWA / Área de Membros dos 7 Dias com Jesus
+├── admin.html         # Painel Administrativo de Vendas Tutora e Membros
 ├── config.js          # Configuração central (Link da Tutora, preços, suporte, dados dos 7 dias)
-├── server.js          # Servidor Node.js nativo para testes locais
+├── server.js          # Servidor Node.js local para desenvolvimento
+├── vercel.json        # Configuração de deploy em produção na Vercel
+├── api/               # Funções Serverless Vercel (login, status, tutora-webhook)
 ├── TUTORA_SETUP.md    # Guia passo a passo de cadastro e checkout na Tutora
-├── package.json       # Configurações do pacote
+├── package.json       # Configurações e dependências do projeto
 └── README.md          # Documentação principal
 ```
+
+---
+
+## 🌐 Links em Produção
+
+* **Domínio Oficial**: [https://7d-jesus.online](https://7d-jesus.online)
+* **Página de Vendas (Funil / VSL)**: [https://7d-jesus.online/index.html](https://7d-jesus.online/index.html)
+* **Área de Membros (App dos 7 Dias)**: [https://7d-jesus.online/app.html](https://7d-jesus.online/app.html)
+* **Painel Administrativo**: [https://7d-jesus.online/admin.html](https://7d-jesus.online/admin.html)
+* **Webhook Tutora Moçambique**: `https://7d-jesus.online/api/tutora-webhook`
 
 ---
 
