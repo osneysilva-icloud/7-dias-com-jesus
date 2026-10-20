@@ -343,6 +343,48 @@
   <!-- CONTEÚDO PRINCIPAL DO DIA SELECIONADO -->
   <main class="max-w-2xl mx-auto px-4 pt-6 space-y-6">
 
+    <!-- CARD DO PÃO DA VIDA (VERSÍCULO DIÁRIO COM GERADOR DE STATUS VIRAL) -->
+    <div class="card-glass rounded-3xl p-5 sm:p-6 relative overflow-hidden border border-amber-500/35 bg-gradient-to-br from-amber-500/10 via-sacred-900 to-sacred-950 shadow-xl">
+      <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+          <span class="text-[10px] uppercase font-bold text-amber-300 tracking-widest font-mono flex items-center gap-1.5">
+            <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>PÃO DA VIDA · VERSÍCULO DE HOJE</span>
+          </span>
+        </div>
+        <span class="text-[11px] text-slate-400 font-mono" id="daily-verse-date">Hoje</span>
+      </div>
+
+      <!-- Versículo Texto -->
+      <blockquote class="font-cinzel text-sm sm:text-base text-white font-semibold leading-relaxed mb-2 relative pl-3.5 border-l-2 border-amber-400" id="daily-verse-text">
+        "O Senhor é o meu pastor; de nada terei falta."
+      </blockquote>
+
+      <!-- Reflexão Diária Curta -->
+      <p class="text-xs text-slate-300 italic mb-3 pl-3.5" id="daily-verse-reflection">
+        Mesmo em dias de incerteza, o Bom Pastor vai à sua frente. Confie que nada do que você realmente precisa faltará.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/5">
+        <span class="text-xs font-bold text-amber-400 font-mono" id="daily-verse-ref">Salmos 23:1-2</span>
+
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="playDailyVerseAudio()" id="btn-daily-verse-audio" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-amber-300 transition text-xs flex items-center gap-1.5 cursor-pointer" title="Ouvir Versículo">
+            <i data-lucide="volume-2" class="w-3.5 h-3.5" id="daily-verse-audio-icon"></i>
+            <span class="hidden sm:inline">Ouvir</span>
+          </button>
+          
+          <button type="button" onclick="openDailyStatusModal()" class="px-3.5 py-2 rounded-xl gold-btn text-sacred-950 font-cinzel font-bold text-xs flex items-center gap-1.5 shadow-md transition cursor-pointer">
+            <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+            <span>Status WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- CARD DO TÍTULO E TEMA DO DIA -->
     <div class="card-glass rounded-3xl p-6 relative overflow-hidden">
       <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -652,6 +694,47 @@
     </div>
   </div>
 
+  <!-- MODAL DO GERADOR DE CARD PARA STATUS DO WHATSAPP / INSTAGRAM -->
+  <div id="daily-status-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="card-glass max-w-sm w-full rounded-3xl p-5 sm:p-6 border-2 border-amber-500/40 text-center relative shadow-2xl my-6">
+      <button onclick="closeDailyStatusModal()" class="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white cursor-pointer">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="text-center mb-3">
+        <span class="text-[10px] uppercase font-bold text-amber-400 tracking-widest font-mono">STATUS DO WHATSAPP</span>
+        <h3 class="font-cinzel text-lg font-bold text-white mt-0.5">Versículo do Dia</h3>
+        <p class="text-xs text-slate-400">Poste no Status e abençoe seus contatos com a Palavra</p>
+      </div>
+
+      <!-- Preview do Card Gerado (Proporção 9:16 de Status) -->
+      <div class="relative w-full aspect-[9/16] max-h-[360px] rounded-2xl overflow-hidden border border-amber-500/40 shadow-xl bg-sacred-950 mx-auto mb-4 flex items-center justify-center">
+        <canvas id="daily-status-canvas" width="1080" height="1920" class="w-full h-full object-contain rounded-2xl"></canvas>
+      </div>
+
+      <!-- Botões de Ação do Status -->
+      <div class="space-y-2">
+        <button onclick="shareStatusToWhatsApp()" class="w-full py-3 rounded-xl gold-btn text-sacred-950 font-cinzel font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>PARTILHAR NO WHATSAPP</span>
+        </button>
+
+        <div class="flex gap-2">
+          <button onclick="downloadStatusImage()" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition cursor-pointer">
+            <i data-lucide="download" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>Baixar Imagem</span>
+          </button>
+          <button onclick="copyDailyVerseText()" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition cursor-pointer">
+            <i data-lucide="copy" class="w-3.5 h-3.5 text-amber-300"></i>
+            <span>Copiar Texto</span>
+          </button>
+        </div>
+      </div>
+
+      <p class="text-[10px] text-slate-500 mt-2.5">O card inclui o link oficial para que seus amigos iniciem a jornada.</p>
+    </div>
+  </div>
+
   <!-- MODAL DO CERTIFICADO OFICIAL DE CONCLUSÃO (DESBLOQUEADO NO DIA 7) -->
   <div id="certificate-modal" class="fixed inset-0 z-50 bg-sacred-950/90 backdrop-blur-md p-4 hidden flex items-center justify-center overflow-y-auto">
     <div class="card-glass max-w-lg w-full rounded-3xl p-6 sm:p-8 border-2 border-amber-500/60 shadow-[0_0_50px_rgba(230,183,71,0.3)] text-center my-8">
@@ -698,9 +781,10 @@
   </div>
   </div> <!-- Fecha #app-main-content -->
 
-  <!-- Carrega Dados da Jornada, Crônicas dos Profetas e SDK do Supabase -->
+  <!-- Carrega Dados da Jornada, Crônicas dos Profetas, Versículo Diário e SDK do Supabase -->
   <script src="config.js"></script>
   <script src="prophets-data.js"></script>
+  <script src="daily-verses-data.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Lógica da Aplicação SaaS & Autenticação de Clientes -->
@@ -1009,6 +1093,7 @@
       setupAudioEngine();
       setupEventListeners();
       renderProphetsList();
+      renderDailyVerseCard();
 
       const regEmailInput = document.getElementById('reg-email');
       if (regEmailInput) {
@@ -1748,6 +1833,312 @@
       if (!p) return;
       const text = `📜 *Crônicas dos Profetas — ${p.name}: ${p.title}*\n\n"${p.summary}"\n\nLeia a história bíblica completa e ouça a narração sagrada guiada no app 7 Dias com Jesus: https://www.7d-jesus.online/app`;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // ==========================================================================
+    // VERSÍCULO DO DIA (PÃO DA VIDA) & GERADOR DE STATUS WHATSAPP / INSTAGRAM
+    // ==========================================================================
+    let isDailyVerseAudioPlaying = false;
+
+    function getTodayVerse() {
+      const data = window.DAILY_VERSES_DATA || [];
+      if (data.length === 0) {
+        return {
+          verse: "O Senhor é o meu pastor; de nada terei falta.",
+          reference: "Salmos 23:1",
+          reflection: "Mesmo em dias de incerteza, o Bom Pastor vai à sua frente. Confie que nada faltará."
+        };
+      }
+      const dayOfMonth = new Date().getDate();
+      const index = (dayOfMonth - 1) % data.length;
+      return data[index];
+    }
+
+    function renderDailyVerseCard() {
+      const v = getTodayVerse();
+      const dateEl = document.getElementById('daily-verse-date');
+      const textEl = document.getElementById('daily-verse-text');
+      const refEl = document.getElementById('daily-verse-ref');
+      const refColEl = document.getElementById('daily-verse-reflection');
+
+      if (dateEl) {
+        dateEl.textContent = new Date().toLocaleDateString('pt-PT', { day: 'numeric', month: 'short' });
+      }
+      if (textEl) textEl.textContent = `"${v.verse}"`;
+      if (refEl) refEl.textContent = v.reference;
+      if (refColEl) refColEl.textContent = v.reflection;
+    }
+
+    function playDailyVerseAudio() {
+      if (!('speechSynthesis' in window)) {
+        alert("O seu navegador não suporta áudio nativo.");
+        return;
+      }
+
+      if (isDailyVerseAudioPlaying) {
+        window.speechSynthesis.cancel();
+        isDailyVerseAudioPlaying = false;
+        updateDailyVerseAudioUI(false);
+      } else {
+        const v = getTodayVerse();
+        const textToRead = `Versículo do dia. ${v.reference}. ${v.verse}. Reflexão para hoje: ${v.reflection}`;
+
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'pt-PT';
+        utterance.rate = 0.92;
+        utterance.pitch = 1.0;
+
+        utterance.onstart = () => {
+          isDailyVerseAudioPlaying = true;
+          updateDailyVerseAudioUI(true);
+        };
+        utterance.onend = () => {
+          isDailyVerseAudioPlaying = false;
+          updateDailyVerseAudioUI(false);
+        };
+        utterance.onerror = () => {
+          isDailyVerseAudioPlaying = false;
+          updateDailyVerseAudioUI(false);
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function updateDailyVerseAudioUI(isPlaying) {
+      const icon = document.getElementById('daily-verse-audio-icon');
+      if (icon) {
+        icon.setAttribute('data-lucide', isPlaying ? 'pause' : 'volume-2');
+        lucide.createIcons();
+      }
+    }
+
+    function openDailyStatusModal() {
+      const modal = document.getElementById('daily-status-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        drawStatusCard();
+        lucide.createIcons();
+      }
+    }
+
+    function closeDailyStatusModal() {
+      const modal = document.getElementById('daily-status-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function drawStatusCard() {
+      const canvas = document.getElementById('daily-status-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const v = getTodayVerse();
+
+      // 1. Fundo Sagrado Gradiente
+      const grad = ctx.createRadialGradient(540, 960, 100, 540, 960, 1000);
+      grad.addColorStop(0, '#162032');
+      grad.addColorStop(0.5, '#0b0f17');
+      grad.addColorStop(1, '#05070b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1080, 1920);
+
+      // 2. Pontos Estelares Dourados de Brilho
+      ctx.fillStyle = 'rgba(230, 183, 71, 0.15)';
+      const starCoords = [
+        [200, 300], [880, 400], [150, 800], [920, 950], [300, 1400], [800, 1550],
+        [540, 250], [400, 700], [700, 750], [250, 1200], [850, 1250], [540, 1650]
+      ];
+      starCoords.forEach(([x, y]) => {
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 3. Moldura Dupla Dourada
+      ctx.strokeStyle = 'rgba(230, 183, 71, 0.45)';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(60, 60, 960, 1800);
+
+      ctx.strokeStyle = 'rgba(251, 228, 148, 0.2)';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(76, 76, 928, 1768);
+
+      // Cantos
+      const corners = [[60, 60], [1020, 60], [60, 1860], [1020, 1860]];
+      ctx.fillStyle = '#e6b747';
+      corners.forEach(([cx, cy]) => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 4. Cruz Sagrada no Topo
+      ctx.fillStyle = '#fbe494';
+      ctx.shadowColor = '#e6b747';
+      ctx.shadowBlur = 25;
+      ctx.fillRect(534, 210, 12, 90);
+      ctx.fillRect(505, 235, 70, 12);
+      ctx.shadowBlur = 0;
+
+      // 5. Cabeçalho do Versículo
+      ctx.fillStyle = '#e6b747';
+      ctx.font = 'bold 28px "Cinzel", Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('VERSÍCULO DO DIA', 540, 360);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '500 22px "Outfit", sans-serif';
+      const todayStr = new Date().toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' }).toUpperCase();
+      ctx.fillText(todayStr, 540, 400);
+
+      // Divisória sutil
+      ctx.strokeStyle = 'rgba(230, 183, 71, 0.35)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(340, 440);
+      ctx.lineTo(740, 440);
+      ctx.stroke();
+
+      // 6. Aspas Grandes Ornamentais
+      ctx.fillStyle = 'rgba(230, 183, 71, 0.25)';
+      ctx.font = 'italic bold 160px "Cinzel", Georgia, serif';
+      ctx.fillText('“', 540, 610);
+
+      // 7. Texto do Versículo Quebrado
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 44px "Cinzel", Georgia, serif';
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+      ctx.shadowBlur = 12;
+
+      const maxWidth = 820;
+      const lineHeight = 64;
+      const words = v.verse.split(' ');
+      let lines = [];
+      let currentLine = '';
+
+      for (let i = 0; i < words.length; i++) {
+        const testLine = currentLine ? currentLine + ' ' + words[i] : words[i];
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && currentLine) {
+          lines.push(currentLine);
+          currentLine = words[i];
+        } else {
+          currentLine = testLine;
+        }
+      }
+      if (currentLine) lines.push(currentLine);
+
+      const totalVerseHeight = lines.length * lineHeight;
+      const startY = 690 + (320 - totalVerseHeight) / 2;
+
+      lines.forEach((line, idx) => {
+        ctx.fillText(line, 540, startY + (idx * lineHeight));
+      });
+      ctx.shadowBlur = 0;
+
+      // 8. Referência Bíblica Dourada
+      const refY = startY + (lines.length * lineHeight) + 60;
+      ctx.fillStyle = '#fbe494';
+      ctx.font = 'bold 36px "Cinzel", Georgia, serif';
+      ctx.fillText('— ' + v.reference + ' —', 540, refY);
+
+      // 9. Reflexão Diária
+      ctx.strokeStyle = 'rgba(230, 183, 71, 0.35)';
+      ctx.beginPath();
+      ctx.moveTo(400, refY + 50);
+      ctx.lineTo(680, refY + 50);
+      ctx.stroke();
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'italic 28px "Outfit", sans-serif';
+
+      const refWords = v.reflection.split(' ');
+      let refLines = [];
+      let curRefLine = '';
+      for (let i = 0; i < refWords.length; i++) {
+        const test = curRefLine ? curRefLine + ' ' + refWords[i] : refWords[i];
+        if (ctx.measureText(test).width > 780 && curRefLine) {
+          refLines.push(curRefLine);
+          curRefLine = refWords[i];
+        } else {
+          curRefLine = test;
+        }
+      }
+      if (curRefLine) refLines.push(curRefLine);
+
+      refLines.forEach((rLine, rIdx) => {
+        ctx.fillText(rLine, 540, refY + 110 + (rIdx * 42));
+      });
+
+      // 10. Rodapé / Badge do Aplicativo
+      const footerBoxY = 1660;
+      ctx.fillStyle = 'rgba(230, 183, 71, 0.12)';
+      ctx.strokeStyle = 'rgba(230, 183, 71, 0.4)';
+      ctx.lineWidth = 2;
+      
+      const fWidth = 740;
+      const fHeight = 110;
+      const fX = (1080 - fWidth) / 2;
+      ctx.beginPath();
+      ctx.roundRect(fX, footerBoxY, fWidth, fHeight, 24);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#fbe494';
+      ctx.font = 'bold 26px "Cinzel", Georgia, serif';
+      ctx.fillText('7 DIAS COM JESUS', 540, footerBoxY + 45);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '600 22px "Outfit", sans-serif';
+      ctx.fillText('Inicie o seu devocional em: www.7d-jesus.online', 540, footerBoxY + 84);
+    }
+
+    async function shareStatusToWhatsApp() {
+      const canvas = document.getElementById('daily-status-canvas');
+      const v = getTodayVerse();
+      const shareText = `📖 *Versículo do Dia: ${v.reference}*\n\n"${v.verse}"\n\n🕊️ *Reflexão:* ${v.reflection}\n\nReceba o seu devocional diário em: https://www.7d-jesus.online/app`;
+
+      if (navigator.share && canvas && canvas.toBlob) {
+        try {
+          canvas.toBlob(async (blob) => {
+            const file = new File([blob], 'versiculo-do-dia-7dias-com-jesus.png', { type: 'image/png' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                title: 'Versículo do Dia',
+                text: shareText,
+                files: [file]
+              });
+              return;
+            }
+            // Fallback: faz o download e abre WhatsApp
+            downloadStatusImage();
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank');
+          });
+          return;
+        } catch (e) {
+          console.warn('Erro ao compartilhar arquivo:', e);
+        }
+      }
+
+      // Fallback padrão
+      downloadStatusImage();
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank');
+    }
+
+    function downloadStatusImage() {
+      const canvas = document.getElementById('daily-status-canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = `versiculo-do-dia-${new Date().toISOString().slice(0, 10)}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function copyDailyVerseText() {
+      const v = getTodayVerse();
+      const text = `📖 *Versículo do Dia — ${v.reference}*\n\n"${v.verse}"\n\n🕊️ *Reflexão:* ${v.reflection}\n\nReceba o seu devocional diário: https://www.7d-jesus.online/app`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Versículo copiado com sucesso! Você pode colar no seu Status ou enviar aos seus contatos.");
+      });
     }
 
     // ==========================================================================
