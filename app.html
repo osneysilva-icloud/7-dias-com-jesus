@@ -311,6 +311,26 @@
     </div>
   </div>
 
+  <!-- BARRA DE NAVEGAÇÃO PRINCIPAL (Jornada 7 Dias vs Crônicas dos Profetas) -->
+  <nav class="sticky top-[57px] z-30 bg-sacred-950/95 backdrop-blur-md border-b border-white/10 px-4 py-2.5">
+    <div class="max-w-2xl mx-auto flex items-center gap-2">
+      <button type="button" id="main-tab-journey" onclick="switchMainSection('journey')" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-sacred-950 shadow cursor-pointer">
+        <i data-lucide="sun" class="w-4 h-4"></i>
+        <span>Jornada 7 Dias</span>
+      </button>
+      <button type="button" id="main-tab-prophets" onclick="switchMainSection('prophets')" class="flex-1 py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 text-slate-300 hover:text-white hover:bg-white/5 border border-white/5 cursor-pointer">
+        <i data-lucide="scroll" class="w-4 h-4 text-amber-400"></i>
+        <span>Crônicas dos Profetas</span>
+        <span class="px-1.5 py-0.5 rounded-full text-[9px] bg-amber-500/20 text-amber-300 font-mono font-bold">8 Histórias</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========================================================================= -->
+  <!-- SEÇÃO 1: JORNADA COM JESUS (7 DIAS) -->
+  <!-- ========================================================================= -->
+  <div id="section-journey">
+
   <!-- SELETOR HORIZONTAL DOS 7 DIAS (CARROSSEL INTERATIVO) -->
   <div class="bg-sacred-900/90 border-b border-white/5 py-3 px-4">
     <div class="max-w-2xl mx-auto">
@@ -497,6 +517,140 @@
     </div>
 
   </main>
+  </div> <!-- Fecha #section-journey -->
+
+  <!-- ========================================================================= -->
+  <!-- SEÇÃO 2: CRÔNICAS DOS PROFETAS (Histórias Bíblicas Profundas & Áudio) -->
+  <!-- ========================================================================= -->
+  <div id="section-prophets" class="hidden max-w-2xl mx-auto px-4 pt-6 pb-12 space-y-6">
+
+    <!-- 1. VISTA DE LISTA DE HISTÓRIAS DOS PROFETAS -->
+    <div id="prophets-list-view" class="space-y-6">
+      <!-- Card Hero de Apresentação -->
+      <div class="card-glass rounded-3xl p-6 sm:p-7 relative overflow-hidden border border-amber-500/30">
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-widest flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3 h-3 text-amber-400"></i>
+            <span>Vozes de Deus</span>
+          </span>
+          <span class="text-xs text-slate-400">8 Crônicas Completas</span>
+        </div>
+        <h2 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white mt-1">Crônicas dos Profetas</h2>
+        <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+          Histórias bíblicas reais, profundas e completas sobre os homens de Deus que abalaram impérios. Escolha um profeta para ler cada detalhe das Escrituras ou ouvir a narração sagrada em áudio.
+        </p>
+
+        <!-- Campo de Busca Rápida -->
+        <div class="mt-4 relative">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <input type="text" id="prophets-search-input" oninput="filterProphetsList(this.value)" placeholder="Buscar profeta, milagre ou passagem (ex: Elias, Leões, Nilo, Jonas...)" class="w-full bg-sacred-950/90 border border-white/10 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+        </div>
+      </div>
+
+      <!-- Grade Dinâmica dos Profetas -->
+      <div id="prophets-cards-container" class="space-y-4">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+
+    <!-- 2. VISTA DE LEITURA & ÁUDIO DO PROFETA SELECIONADO -->
+    <div id="prophets-detail-view" class="hidden space-y-6">
+      <!-- Botão Voltar e Ações -->
+      <div class="flex items-center justify-between">
+        <button onclick="backToProphetsList()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white transition cursor-pointer">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Voltar aos Profetas</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button id="btn-prophet-share-top" onclick="shareProphetWhatsApp()" class="p-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer" title="Partilhar no WhatsApp">
+            <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Partilhar</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PLAYER DE ÁUDIO SAGRADO DO PROFETA (STICKY) -->
+      <div class="sticky top-[110px] z-20 card-glass rounded-2xl p-4 border border-amber-500/40 shadow-xl backdrop-blur-md">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <button id="btn-prophet-audio-toggle" onclick="toggleProphetAudio()" class="w-11 h-11 rounded-xl gold-btn text-sacred-950 flex items-center justify-center shrink-0 shadow-md cursor-pointer">
+              <i data-lucide="play" class="w-5 h-5 ml-0.5" id="prophet-audio-icon"></i>
+            </button>
+            <div class="truncate">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-white truncate" id="prophet-audio-title">Narração Guiada</span>
+                <span id="prophet-audio-badge" class="hidden px-2 py-0.5 rounded-full text-[9px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold animate-pulse">Reproduzindo</span>
+              </div>
+              <p class="text-[11px] text-amber-300/80 truncate" id="prophet-audio-status">Toque no play para ouvir a história completa</p>
+            </div>
+          </div>
+
+          <!-- Controle de Velocidade e Parar -->
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="cycleProphetSpeechRate()" id="btn-prophet-rate" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] font-mono font-bold text-slate-300 cursor-pointer" title="Velocidade da voz">
+              1.0x
+            </button>
+            <button onclick="stopProphetAudio()" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white cursor-pointer" title="Parar áudio">
+              <i data-lucide="square" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de Progresso do Áudio / Leitura -->
+        <div class="w-full bg-slate-800 h-1 mt-3 rounded-full overflow-hidden">
+          <div id="prophet-audio-progress" class="bg-gradient-to-r from-amber-500 to-amber-300 h-full w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- ARTIGO COMPLETO DA HISTÓRIA -->
+      <article class="card-glass rounded-3xl p-6 sm:p-8 space-y-6 border border-amber-500/20">
+        <!-- Cabeçalho do Profeta -->
+        <div class="border-b border-white/10 pb-5">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-wider" id="prophet-detail-period">
+              Período
+            </span>
+            <span class="px-2.5 py-1 rounded-full text-[10px] bg-white/5 text-slate-300 border border-white/10" id="prophet-detail-tag">
+              Tag
+            </span>
+            <span class="text-[11px] text-slate-400 flex items-center gap-1 ml-auto">
+              <i data-lucide="clock" class="w-3 h-3 text-amber-400"></i>
+              <span id="prophet-detail-time">10 min</span>
+            </span>
+          </div>
+
+          <h1 class="font-cinzel text-2xl sm:text-3xl font-extrabold text-white mt-2 mb-1" id="prophet-detail-name">Nome do Profeta</h1>
+          <p class="font-cinzel text-sm sm:text-base text-amber-300 font-semibold" id="prophet-detail-title">Título Sagrado</p>
+          <p class="text-xs text-slate-400 font-mono mt-1" id="prophet-detail-ref">Referência Bíblica</p>
+        </div>
+
+        <!-- Corpo das Seções Narrativas -->
+        <div id="prophet-detail-sections" class="space-y-6 text-xs sm:text-sm text-slate-200 leading-relaxed">
+          <!-- Injetado dinamicamente via JS -->
+        </div>
+
+        <!-- Botão Concluir & Navegação -->
+        <div class="pt-6 border-t border-white/10 space-y-3">
+          <button id="btn-prophet-complete" onclick="markCurrentProphetCompleted()" class="w-full py-3.5 rounded-2xl gold-btn font-cinzel font-bold text-sacred-950 text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span id="btn-prophet-complete-text">Marcar História como Concluída</span>
+          </button>
+          
+          <div class="flex gap-3">
+            <button onclick="shareProphetWhatsApp()" class="flex-1 py-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+              <span>Partilhar no WhatsApp</span>
+            </button>
+            <button onclick="backToProphetsList()" class="py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white transition cursor-pointer">
+              Mais Profetas
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
 
   <!-- MODAL DO CERTIFICADO OFICIAL DE CONCLUSÃO (DESBLOQUEADO NO DIA 7) -->
   <div id="certificate-modal" class="fixed inset-0 z-50 bg-sacred-950/90 backdrop-blur-md p-4 hidden flex items-center justify-center overflow-y-auto">
@@ -544,8 +698,9 @@
   </div>
   </div> <!-- Fecha #app-main-content -->
 
-  <!-- Carrega Dados da Jornada e SDK do Supabase -->
+  <!-- Carrega Dados da Jornada, Crônicas dos Profetas e SDK do Supabase -->
   <script src="config.js"></script>
+  <script src="prophets-data.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Lógica da Aplicação SaaS & Autenticação de Clientes -->
@@ -853,6 +1008,7 @@
       updateOverallProgress();
       setupAudioEngine();
       setupEventListeners();
+      renderProphetsList();
 
       const regEmailInput = document.getElementById('reg-email');
       if (regEmailInput) {
@@ -1271,6 +1427,327 @@
         origin: { y: 0.5 }
       });
       lucide.createIcons();
+    }
+
+    // ==========================================================================
+    // CRÔNICAS DOS PROFETAS - LEITURA, BUSCA E NARRAÇÃO EM ÁUDIO
+    // ==========================================================================
+    const ProphetsState = {
+      activeSection: 'journey',
+      selectedProphet: null,
+      completedProphets: JSON.parse(localStorage.getItem('7dias_completed_prophets') || '[]'),
+      isSpeaking: false,
+      speechRate: 1.0,
+      activeUtterance: null
+    };
+
+    function switchMainSection(section) {
+      ProphetsState.activeSection = section;
+      const tabJourney = document.getElementById('main-tab-journey');
+      const tabProphets = document.getElementById('main-tab-prophets');
+      const secJourney = document.getElementById('section-journey');
+      const secProphets = document.getElementById('section-prophets');
+
+      if (section === 'journey') {
+        tabJourney.className = "flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-sacred-950 shadow cursor-pointer";
+        tabProphets.className = "flex-1 py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 text-slate-300 hover:text-white hover:bg-white/5 border border-white/5 cursor-pointer";
+        secJourney.classList.remove('hidden');
+        secProphets.classList.add('hidden');
+        stopProphetAudio();
+      } else {
+        tabProphets.className = "flex-1 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 bg-amber-500 text-sacred-950 shadow cursor-pointer";
+        tabJourney.className = "flex-1 py-2 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2 text-slate-300 hover:text-white hover:bg-white/5 border border-white/5 cursor-pointer";
+        secJourney.classList.add('hidden');
+        secProphets.classList.remove('hidden');
+        renderProphetsList();
+      }
+      lucide.createIcons();
+    }
+
+    function renderProphetsList(searchTerm = '') {
+      const container = document.getElementById('prophets-cards-container');
+      if (!container) return;
+      const data = window.PROPHETS_DATA || [];
+      const term = (searchTerm || '').trim().toLowerCase();
+
+      const filtered = data.filter(p => {
+        if (!term) return true;
+        const searchPool = `${p.name} ${p.title} ${p.bibleReference} ${p.summary} ${p.coverTag}`.toLowerCase();
+        return searchPool.includes(term);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="card-glass rounded-2xl p-8 text-center border border-white/10">
+            <i data-lucide="search-x" class="w-8 h-8 text-slate-500 mx-auto mb-2"></i>
+            <p class="text-sm font-semibold text-slate-300">Nenhum profeta encontrado para "${searchTerm}"</p>
+            <p class="text-xs text-slate-500 mt-1">Tente pesquisar por Elias, Daniel, Moisés, Isaías, Jonas...</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = filtered.map((p) => {
+        const isCompleted = ProphetsState.completedProphets.includes(p.id);
+        return `
+          <div class="card-glass rounded-2xl p-5 border border-white/10 hover:border-amber-500/40 transition duration-300 relative overflow-hidden group">
+            <div class="flex items-start justify-between gap-3 mb-2.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 uppercase tracking-wide">
+                  ${p.period}
+                </span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] bg-white/5 text-slate-400 border border-white/5">
+                  ${p.coverTag}
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                ${isCompleted ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> Concluído</span>' : ''}
+                <span class="text-[11px] text-slate-400 font-mono">${p.readingTime}</span>
+              </div>
+            </div>
+
+            <h3 class="font-cinzel text-lg sm:text-xl font-bold text-white group-hover:text-amber-300 transition">
+              ${p.name}
+            </h3>
+            <p class="text-xs font-semibold text-amber-400/90 mb-1.5">
+              ${p.title}
+            </p>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              ${p.summary}
+            </p>
+
+            <div class="flex items-center justify-between pt-3 border-t border-white/5 gap-2">
+              <span class="text-[10px] text-slate-400 font-mono flex items-center gap-1 truncate">
+                <i data-lucide="book-open" class="w-3 h-3 text-amber-400 shrink-0"></i>
+                <span class="truncate">${p.bibleReference}</span>
+              </span>
+
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="openProphetDetail('${p.id}', true)" class="px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 font-bold text-xs flex items-center gap-1.5 transition cursor-pointer" title="Ouvir Narração em Áudio">
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                  <span>Ouvir</span>
+                </button>
+                <button onclick="openProphetDetail('${p.id}', false)" class="px-3.5 py-1.5 rounded-xl gold-btn text-sacred-950 font-cinzel font-bold text-xs flex items-center gap-1.5 shadow transition cursor-pointer">
+                  <span>Ler História</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterProphetsList(term) {
+      renderProphetsList(term);
+    }
+
+    function openProphetDetail(prophetId, autoPlayAudio = false) {
+      const data = window.PROPHETS_DATA || [];
+      const prophet = data.find(p => p.id === prophetId);
+      if (!prophet) return;
+
+      ProphetsState.selectedProphet = prophet;
+
+      // Preenche os campos do cabeçalho
+      document.getElementById('prophet-detail-period').textContent = prophet.period;
+      document.getElementById('prophet-detail-tag').textContent = prophet.coverTag;
+      document.getElementById('prophet-detail-time').textContent = prophet.readingTime;
+      document.getElementById('prophet-detail-name').textContent = prophet.name;
+      document.getElementById('prophet-detail-title').textContent = prophet.title;
+      document.getElementById('prophet-detail-ref').textContent = prophet.bibleReference;
+      document.getElementById('prophet-audio-title').textContent = prophet.name;
+
+      // Preenche o corpo das seções
+      const sectionsContainer = document.getElementById('prophet-detail-sections');
+      sectionsContainer.innerHTML = prophet.sections.map((sec, idx) => {
+        const isLesson = sec.heading.toLowerCase().includes('lição') || sec.heading.toLowerCase().includes('vida hoje');
+        if (isLesson) {
+          return `
+            <div class="card-glass rounded-2xl p-5 border-2 border-amber-500/40 bg-gradient-to-br from-amber-500/10 to-transparent my-6">
+              <div class="flex items-center gap-2 mb-2 text-amber-400 font-cinzel font-bold text-base">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                <span>${sec.heading}</span>
+              </div>
+              <p class="text-xs sm:text-sm text-amber-100 leading-relaxed">${sec.content}</p>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="space-y-2.5 pb-4 border-b border-white/5 last:border-0" id="prophet-section-${idx}">
+            <h3 class="font-cinzel text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <span>${sec.heading}</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">${sec.content}</p>
+          </div>
+        `;
+      }).join('');
+
+      // Atualiza botão de conclusão
+      const isCompleted = ProphetsState.completedProphets.includes(prophet.id);
+      const btnCompleteText = document.getElementById('btn-prophet-complete-text');
+      if (btnCompleteText) {
+        btnCompleteText.textContent = isCompleted ? "História Concluída ✓" : "Marcar História como Concluída";
+      }
+
+      // Alterna vistas
+      document.getElementById('prophets-list-view').classList.add('hidden');
+      document.getElementById('prophets-detail-view').classList.remove('hidden');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+
+      // Dispara áudio se solicitado
+      if (autoPlayAudio) {
+        setTimeout(() => startProphetAudio(prophet), 400);
+      } else {
+        stopProphetAudio();
+      }
+    }
+
+    function backToProphetsList() {
+      stopProphetAudio();
+      document.getElementById('prophets-detail-view').classList.add('hidden');
+      document.getElementById('prophets-list-view').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderProphetsList();
+    }
+
+    function toggleProphetAudio() {
+      if (ProphetsState.isSpeaking) {
+        stopProphetAudio();
+      } else if (ProphetsState.selectedProphet) {
+        startProphetAudio(ProphetsState.selectedProphet);
+      }
+    }
+
+    function startProphetAudio(prophet) {
+      if (!('speechSynthesis' in window)) {
+        alert("O seu navegador não suporta narração nativa.");
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      // Monta texto completo da história para leitura
+      const storyIntro = `${prophet.name}. ${prophet.title}. Referência bíblica: ${prophet.bibleReference}. `;
+      const storyBody = prophet.sections.map(s => `${s.heading}. ${s.content}`).join(' ');
+      const fullText = storyIntro + storyBody;
+
+      const utterance = new SpeechSynthesisUtterance(fullText);
+      utterance.lang = 'pt-PT';
+      utterance.rate = ProphetsState.speechRate || 0.95;
+      utterance.pitch = 0.98;
+
+      utterance.onstart = () => {
+        ProphetsState.isSpeaking = true;
+        ProphetsState.activeUtterance = utterance;
+        updateProphetAudioUI(true);
+      };
+
+      utterance.onend = () => {
+        ProphetsState.isSpeaking = false;
+        ProphetsState.activeUtterance = null;
+        updateProphetAudioUI(false);
+      };
+
+      utterance.onerror = () => {
+        ProphetsState.isSpeaking = false;
+        ProphetsState.activeUtterance = null;
+        updateProphetAudioUI(false);
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function stopProphetAudio() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      ProphetsState.isSpeaking = false;
+      ProphetsState.activeUtterance = null;
+      updateProphetAudioUI(false);
+    }
+
+    function cycleProphetSpeechRate() {
+      const rates = [0.85, 1.0, 1.15];
+      const curIdx = rates.indexOf(ProphetsState.speechRate);
+      const nextIdx = (curIdx + 1) % rates.length;
+      ProphetsState.speechRate = rates[nextIdx];
+
+      const btnRate = document.getElementById('btn-prophet-rate');
+      if (btnRate) btnRate.textContent = `${ProphetsState.speechRate}x`;
+
+      if (ProphetsState.isSpeaking && ProphetsState.selectedProphet) {
+        startProphetAudio(ProphetsState.selectedProphet);
+      }
+    }
+
+    function updateProphetAudioUI(isPlaying) {
+      const icon = document.getElementById('prophet-audio-icon');
+      const badge = document.getElementById('prophet-audio-badge');
+      const status = document.getElementById('prophet-audio-status');
+      const progress = document.getElementById('prophet-audio-progress');
+
+      if (isPlaying) {
+        if (icon) icon.setAttribute('data-lucide', 'pause');
+        if (badge) badge.classList.remove('hidden');
+        if (status) status.textContent = "Ouvindo a narração sagrada...";
+        if (progress) progress.style.width = "100%";
+      } else {
+        if (icon) icon.setAttribute('data-lucide', 'play');
+        if (badge) badge.classList.add('hidden');
+        if (status) status.textContent = "Toque no play para ouvir a história completa";
+        if (progress) progress.style.width = "0%";
+      }
+      lucide.createIcons();
+    }
+
+    function markCurrentProphetCompleted() {
+      if (!ProphetsState.selectedProphet) return;
+      const pId = ProphetsState.selectedProphet.id;
+      if (!ProphetsState.completedProphets.includes(pId)) {
+        ProphetsState.completedProphets.push(pId);
+        localStorage.setItem('7dias_completed_prophets', JSON.stringify(ProphetsState.completedProphets));
+
+        // Sincroniza em nuvem com o Supabase
+        if (supabaseClient) {
+          const prophetIdx = (window.PROPHETS_DATA || []).findIndex(p => p.id === pId);
+          supabaseClient
+            .from('user_progress')
+            .upsert({
+              phone: getUserSyncId(),
+              day: 100 + (prophetIdx >= 0 ? prophetIdx : 0),
+              completed: true,
+              completed_at: new Date().toISOString()
+            }, { onConflict: 'phone,day' })
+            .then(() => console.log('História do profeta sincronizada com Supabase'))
+            .catch(e => console.warn('Erro ao sincronizar profeta:', e));
+        }
+      }
+
+      // Efeito de celebração
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#e6b747', '#fbe494', '#ffffff']
+      });
+
+      const btnText = document.getElementById('btn-prophet-complete-text');
+      if (btnText) btnText.textContent = "História Concluída ✓";
+    }
+
+    function shareProphetWhatsApp() {
+      const p = ProphetsState.selectedProphet;
+      if (!p) return;
+      const text = `📜 *Crônicas dos Profetas — ${p.name}: ${p.title}*\n\n"${p.summary}"\n\nLeia a história bíblica completa e ouça a narração sagrada guiada no app 7 Dias com Jesus: https://www.7d-jesus.online/app`;
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
     }
 
     // ==========================================================================
