@@ -87,6 +87,142 @@
 </head>
 <body class="antialiased pb-24">
 
+  <!-- ========================================================================= -->
+  <!-- 1. TELA DE ACESSO DO CLIENTE / FIEL (Validação Tutora & Login) -->
+  <!-- ========================================================================= -->
+  <div id="client-auth-screen" class="min-h-screen flex items-center justify-center p-4 bg-sacred-950 relative overflow-hidden">
+    <!-- Efeito luminoso de fundo -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="card-glass max-w-md w-full rounded-3xl p-6 sm:p-8 border-2 border-amber-500/30 shadow-2xl relative">
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center mb-3 border border-amber-500/30">
+          <img src="logo.svg" alt="Logo" class="w-10 h-10 object-contain">
+        </div>
+        <span class="text-[10px] font-bold text-amber-400 uppercase tracking-widest">ÁREA EXCLUSIVA DE MEMBROS</span>
+        <h2 class="font-cinzel text-2xl font-bold text-white mt-1">7 Dias com Jesus</h2>
+        <p class="text-xs text-slate-400 mt-1">Acesse a sua jornada diária de paz e intimidade com Cristo</p>
+      </div>
+
+      <!-- Abas de Navegação: Criar Conta vs Já Tenho Conta -->
+      <div class="flex rounded-xl bg-sacred-900 p-1 mb-5 border border-white/5">
+        <button type="button" id="tab-btn-register" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-semibold rounded-lg transition bg-amber-500 text-sacred-950 shadow cursor-pointer">
+          Criar Minha Conta
+        </button>
+        <button type="button" id="tab-btn-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white cursor-pointer">
+          Já Tenho Conta
+        </button>
+      </div>
+
+      <!-- Alerta Geral Dinâmico (Notificações, Erros, Sucessos) -->
+      <div id="auth-alert" class="hidden p-3.5 rounded-2xl text-xs mb-4"></div>
+
+      <!-- FORMULÁRIO 1: CRIAR CONTA (VALIDAÇÃO TUTORA) -->
+      <form id="form-client-register" onsubmit="handleClientRegister(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            E-mail da Compra <span class="text-amber-400">*</span>
+          </label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="email" id="reg-email" required placeholder="O mesmo e-mail que usou na Tutora..." class="w-full bg-sacred-900 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+          </div>
+          <p class="text-[10px] text-slate-500 mt-1">Identificamos automaticamente a sua compra aprovada na Tutora.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Nome Completo</label>
+          <div class="relative">
+            <i data-lucide="user" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="reg-name" required placeholder="Como gostaria de ser chamado..." class="w-full bg-sacred-900 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+          </div>
+        </div>
+
+        <!-- WhatsApp com DDI Internacional Alterável -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            Número de WhatsApp <span class="text-amber-400">*</span>
+          </label>
+          <div class="flex gap-2">
+            <!-- Seletor de DDI -->
+            <select id="reg-ddi" onchange="toggleCustomDdi(this.value)" class="bg-sacred-900 border border-white/10 rounded-xl px-2.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-400 transition shrink-0 cursor-pointer">
+              <option value="+258" selected>🇲🇿 +258 (Moçambique)</option>
+              <option value="+244">🇦🇴 +244 (Angola)</option>
+              <option value="+27">🇿🇦 +27 (África do Sul)</option>
+              <option value="+55">🇧🇷 +55 (Brasil)</option>
+              <option value="+351">🇵🇹 +351 (Portugal)</option>
+              <option value="+1">🇺🇸 +1 (EUA / Canadá)</option>
+              <option value="+44">🇬🇧 +44 (Reino Unido)</option>
+              <option value="+34">🇪🇸 +34 (Espanha)</option>
+              <option value="+238">🇨🇻 +238 (Cabo Verde)</option>
+              <option value="+239">🇸🇹 +239 (São Tomé)</option>
+              <option value="custom">🌐 Outro DDI</option>
+            </select>
+            <!-- Campo custom de DDI se selecionado "Outro" -->
+            <input type="text" id="reg-custom-ddi" placeholder="+DDI" class="hidden w-16 bg-sacred-900 border border-white/10 rounded-xl px-2 py-2.5 text-xs text-white text-center focus:outline-none focus:border-amber-400">
+            <!-- Campo do Número -->
+            <input type="tel" id="reg-phone" required placeholder="84 123 4567" class="flex-1 bg-sacred-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">
+            Crie uma Senha de Acesso <span class="text-amber-400">*</span>
+          </label>
+          <div class="relative">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="password" id="reg-password" required minlength="6" placeholder="Mínimo de 6 caracteres..." class="w-full bg-sacred-900 border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            <button type="button" onclick="togglePasswordVisibility('reg-password')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
+              <i data-lucide="eye" class="w-3.5 h-3.5" id="reg-password-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-submit-reg" class="w-full py-3.5 rounded-xl font-cinzel font-bold text-sacred-950 text-xs gold-btn flex items-center justify-center gap-2 mt-4 cursor-pointer">
+          <span>CRIAR CONTA & ENTRAR NA JORNADA</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+
+      <!-- FORMULÁRIO 2: JÁ TENHO CONTA (LOGIN) -->
+      <form id="form-client-login" onsubmit="handleClientLogin(event)" class="space-y-3.5 hidden">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">E-mail de Acesso</label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="email" id="login-client-email" required placeholder="Digite o seu e-mail cadastrado..." class="w-full bg-sacred-900 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Sua Senha</label>
+          <div class="relative">
+            <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="password" id="login-client-password" required placeholder="Digite sua senha..." class="w-full bg-sacred-900 border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 transition">
+            <button type="button" onclick="togglePasswordVisibility('login-client-password')" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer">
+              <i data-lucide="eye" class="w-3.5 h-3.5" id="login-client-password-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-submit-client-login" class="w-full py-3.5 rounded-xl font-cinzel font-bold text-sacred-950 text-xs gold-btn flex items-center justify-center gap-2 mt-4 cursor-pointer">
+          <span>ENTRAR NO MEU APLICATIVO</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </form>
+
+      <div class="mt-6 text-center text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
+        <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
+        <span>Acesso protegido · Integração oficial Tutora & Supabase</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. CONTEÚDO PRINCIPAL DO APP (Exibido após login) -->
+  <!-- ========================================================================= -->
+  <div id="app-main-content" class="hidden">
+
   <!-- CABEÇALHO DO APP MOBILE-FIRST -->
   <header class="sticky top-0 z-40 bg-sacred-950/95 backdrop-blur-md border-b border-white/10 px-4 py-3">
     <div class="max-w-2xl mx-auto flex items-center justify-between">
@@ -104,14 +240,22 @@
         </div>
       </div>
       
-      <!-- Progresso Geral -->
-      <div class="flex items-center gap-2">
+      <!-- Progresso Geral e Membro -->
+      <div class="flex items-center gap-2.5">
         <div class="text-right">
           <span class="text-xs font-bold text-amber-400 font-cinzel" id="progress-percent">0%</span>
           <span class="block text-[10px] text-slate-400">Completo</span>
         </div>
-        <div class="w-8 h-8 rounded-full border-2 border-amber-500/30 flex items-center justify-center text-amber-400 text-xs font-bold bg-amber-500/10">
-          ✝
+        
+        <div class="flex items-center gap-2 pl-2 border-l border-white/10">
+          <div class="hidden sm:flex flex-col text-right">
+            <span class="text-xs font-semibold text-white truncate max-w-[110px]" id="member-name-display">Fiel</span>
+            <span class="text-[10px] text-emerald-400 font-mono" id="member-phone-display"></span>
+          </div>
+          <button onclick="handleClientLogout()" title="Sair da Conta" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition cursor-pointer flex items-center gap-1 text-[11px]">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Sair</span>
+          </button>
         </div>
       </div>
     </div>
@@ -353,12 +497,13 @@
 
     </div>
   </div>
+  </div> <!-- Fecha #app-main-content -->
 
   <!-- Carrega Dados da Jornada e SDK do Supabase -->
   <script src="config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Lógica da Aplicação SaaS -->
+  <!-- Lógica da Aplicação SaaS & Autenticação de Clientes -->
   <script>
     // Inicialização do Supabase Client
     let supabaseClient = null;
@@ -366,6 +511,14 @@
     if (!userDeviceId) {
       userDeviceId = 'user_' + Math.random().toString(36).substring(2, 11) + '_' + Date.now();
       localStorage.setItem('7dias_device_id', userDeviceId);
+    }
+
+    // Sessão do Cliente / Fiel Registrado
+    let currentClientUser = null;
+    try {
+      currentClientUser = JSON.parse(localStorage.getItem('7dias_client_user') || 'null');
+    } catch (e) {
+      currentClientUser = null;
     }
 
     if (window.APP_CONFIG && window.APP_CONFIG.supabase && window.supabase) {
@@ -377,6 +530,259 @@
         console.log('✝ Supabase conectado com sucesso no App!');
       } catch (e) {
         console.warn('Supabase offline ou indisponível:', e);
+      }
+    }
+
+    function getUserSyncId() {
+      if (currentClientUser && currentClientUser.phone) return currentClientUser.phone;
+      if (currentClientUser && currentClientUser.email) return currentClientUser.email;
+      return userDeviceId;
+    }
+
+    // Alternância de Abas: Criar Conta vs Já Tenho Conta
+    function switchAuthTab(tab) {
+      const tabReg = document.getElementById('tab-btn-register');
+      const tabLog = document.getElementById('tab-btn-login');
+      const formReg = document.getElementById('form-client-register');
+      const formLog = document.getElementById('form-client-login');
+      const alertBox = document.getElementById('auth-alert');
+      alertBox.className = 'hidden p-3.5 rounded-2xl text-xs mb-4';
+      alertBox.innerHTML = '';
+
+      if (tab === 'register') {
+        tabReg.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-amber-500 text-sacred-950 shadow cursor-pointer';
+        tabLog.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white cursor-pointer';
+        formReg.classList.remove('hidden');
+        formLog.classList.add('hidden');
+      } else {
+        tabLog.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition bg-amber-500 text-sacred-950 shadow cursor-pointer';
+        tabReg.className = 'flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-white cursor-pointer';
+        formLog.classList.remove('hidden');
+        formReg.classList.add('hidden');
+      }
+    }
+
+    // Seletor de DDI Customizado
+    function toggleCustomDdi(val) {
+      const customInput = document.getElementById('reg-custom-ddi');
+      if (val === 'custom') {
+        customInput.classList.remove('hidden');
+        customInput.focus();
+      } else {
+        customInput.classList.add('hidden');
+      }
+    }
+
+    // Alternar visibilidade de senhas
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      const eye = document.getElementById(inputId + '-eye');
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (eye) eye.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        if (eye) eye.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons();
+    }
+
+    // Exibição de Alertas Estilizados
+    function showAuthAlert(type, message, ctaLink, ctaText) {
+      const box = document.getElementById('auth-alert');
+      box.classList.remove('hidden');
+      if (type === 'error' || type === 'not_purchased') {
+        box.className = 'p-3.5 rounded-2xl text-xs mb-4 bg-rose-950/80 border border-rose-500/40 text-rose-200';
+      } else if (type === 'success') {
+        box.className = 'p-3.5 rounded-2xl text-xs mb-4 bg-emerald-950/80 border border-emerald-500/40 text-emerald-200';
+      } else {
+        box.className = 'p-3.5 rounded-2xl text-xs mb-4 bg-amber-950/80 border border-amber-500/40 text-amber-200';
+      }
+
+      let html = `<div class="flex items-start gap-2.5">
+        <i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-4 h-4 shrink-0 mt-0.5 ${type === 'success' ? 'text-emerald-400' : 'text-rose-400'}"></i>
+        <div class="flex-1 leading-relaxed">
+          <p class="font-medium">${message}</p>`;
+
+      if (ctaLink) {
+        html += `
+          <div class="mt-3 pt-2.5 border-t border-rose-500/20">
+            <a href="${ctaLink}" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-sacred-950 font-bold font-cinzel text-xs transition shadow">
+              <span>${ctaText || 'Adquirir Acesso na Tutora Agora'}</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>`;
+      }
+
+      html += `</div></div>`;
+      box.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    // Verificação de Sessão do Cliente
+    function checkClientSession() {
+      const authScreen = document.getElementById('client-auth-screen');
+      const mainContent = document.getElementById('app-main-content');
+      const nameDisplay = document.getElementById('member-name-display');
+      const phoneDisplay = document.getElementById('member-phone-display');
+      const certNameInput = document.getElementById('cert-name-input');
+
+      if (currentClientUser && currentClientUser.email) {
+        authScreen.classList.add('hidden');
+        mainContent.classList.remove('hidden');
+
+        if (nameDisplay) nameDisplay.textContent = currentClientUser.name || 'Fiel Registrado';
+        if (phoneDisplay) phoneDisplay.textContent = currentClientUser.phone || currentClientUser.email;
+        if (certNameInput && currentClientUser.name && !certNameInput.value) {
+          certNameInput.value = currentClientUser.name;
+        }
+        syncWithSupabase();
+      } else {
+        authScreen.classList.remove('hidden');
+        mainContent.classList.add('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    // Auto-checagem de e-mail ao sair do campo
+    async function checkEmailPurchased(email) {
+      if (!email || !email.includes('@')) return;
+      try {
+        const resp = await fetch(`/api/client/check-email?email=${encodeURIComponent(email)}`);
+        const data = await resp.json();
+        if (data.allowed && data.purchased) {
+          const nameInput = document.getElementById('reg-name');
+          const phoneInput = document.getElementById('reg-phone');
+          if (nameInput && !nameInput.value && data.customer_name) {
+            nameInput.value = data.customer_name;
+          }
+          if (phoneInput && !phoneInput.value && data.customer_phone) {
+            phoneInput.value = data.customer_phone;
+          }
+          showAuthAlert('success', `✨ Compra identificada na Tutora! Preencha a sua senha para ativar o acesso.`);
+        }
+      } catch (e) {}
+    }
+
+    // Envio de Cadastro com Validação da Tutora
+    async function handleClientRegister(e) {
+      e.preventDefault();
+      const email = document.getElementById('reg-email').value.trim();
+      const name = document.getElementById('reg-name').value.trim();
+      let ddi = document.getElementById('reg-ddi').value;
+      if (ddi === 'custom') {
+        ddi = document.getElementById('reg-custom-ddi').value.trim();
+        if (!ddi.startsWith('+')) ddi = '+' + ddi;
+      }
+      const phone = document.getElementById('reg-phone').value.trim();
+      const password = document.getElementById('reg-password').value.trim();
+      const btn = document.getElementById('btn-submit-reg');
+
+      const originalBtn = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Verificando compra na Tutora...</span>`;
+      lucide.createIcons();
+
+      try {
+        const resp = await fetch('/api/client/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, phone, ddi, password })
+        });
+        const data = await resp.json();
+
+        if (!resp.ok || !data.success) {
+          if (data.not_purchased) {
+            const tutoraLink = window.APP_CONFIG?.tutoraCheckoutUrl || 'https://pay.tutora.co.mz/3c527900a74a4fa3b05bda77f5648349';
+            showAuthAlert(
+              'not_purchased',
+              `⚠️ Não encontramos nenhuma compra aprovada na Tutora para o e-mail "<strong>${email}</strong>". Certifique-se de digitar o mesmo e-mail do pagamento. Se ainda não adquiriu o seu acesso, realize a compra na Tutora abaixo:`,
+              tutoraLink,
+              'Comprar Acesso na Tutora'
+            );
+          } else {
+            showAuthAlert('error', data.error || 'Não foi possível concluir o seu cadastro. Verifique os dados e tente novamente.');
+          }
+          btn.disabled = false;
+          btn.innerHTML = originalBtn;
+          lucide.createIcons();
+          return;
+        }
+
+        // Sucesso na criação / validação
+        localStorage.setItem('7dias_client_user', JSON.stringify(data.user));
+        if (data.session) {
+          localStorage.setItem('7dias_client_session', JSON.stringify(data.session));
+        }
+        currentClientUser = data.user;
+        showAuthAlert('success', 'Conta verificada com sucesso! Abrindo a sua jornada diária com Jesus...');
+        setTimeout(() => {
+          checkClientSession();
+        }, 900);
+
+      } catch (err) {
+        showAuthAlert('error', 'Falha na comunicação com o servidor. Verifique a sua conexão e tente novamente.');
+        btn.disabled = false;
+        btn.innerHTML = originalBtn;
+        lucide.createIcons();
+      }
+    }
+
+    // Login de Membro Existente
+    async function handleClientLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-client-email').value.trim();
+      const password = document.getElementById('login-client-password').value.trim();
+      const btn = document.getElementById('btn-submit-client-login');
+
+      const originalBtn = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Entrando...</span>`;
+      lucide.createIcons();
+
+      try {
+        const resp = await fetch('/api/client/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await resp.json();
+
+        if (!resp.ok || !data.success) {
+          showAuthAlert('error', data.error || 'E-mail ou senha incorretos.');
+          btn.disabled = false;
+          btn.innerHTML = originalBtn;
+          lucide.createIcons();
+          return;
+        }
+
+        // Sucesso no Login
+        localStorage.setItem('7dias_client_user', JSON.stringify(data.user));
+        if (data.session) {
+          localStorage.setItem('7dias_client_session', JSON.stringify(data.session));
+        }
+        currentClientUser = data.user;
+        showAuthAlert('success', 'Bem-vindo de volta! Abrindo o devocional...');
+        setTimeout(() => {
+          checkClientSession();
+        }, 700);
+
+      } catch (err) {
+        showAuthAlert('error', 'Erro ao conectar. Verifique a sua internet.');
+        btn.disabled = false;
+        btn.innerHTML = originalBtn;
+        lucide.createIcons();
+      }
+    }
+
+    // Logout do Cliente
+    function handleClientLogout() {
+      if (confirm('Deseja realmente sair da sua conta?')) {
+        localStorage.removeItem('7dias_client_user');
+        localStorage.removeItem('7dias_client_session');
+        currentClientUser = null;
+        checkClientSession();
       }
     }
 
@@ -396,22 +802,28 @@
     // Inicialização do App
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
+      checkClientSession();
       renderDaysSelector();
       loadDayContent(AppState.currentDay);
       updateOverallProgress();
       setupAudioEngine();
       setupEventListeners();
-      syncWithSupabase();
+
+      const regEmailInput = document.getElementById('reg-email');
+      if (regEmailInput) {
+        regEmailInput.addEventListener('blur', (e) => checkEmailPurchased(e.target.value.trim()));
+      }
     });
 
     // Sincronização com Supabase (Carrega progresso salvo em nuvem)
     async function syncWithSupabase() {
       if (!supabaseClient) return;
       try {
+        const syncId = getUserSyncId();
         const { data: progressData } = await supabaseClient
           .from('user_progress')
           .select('day, completed')
-          .eq('phone', userDeviceId);
+          .eq('phone', syncId);
 
         if (progressData && progressData.length > 0) {
           progressData.forEach(p => {
@@ -427,7 +839,7 @@
         const { data: diaryData } = await supabaseClient
           .from('user_diary')
           .select('day, reflection')
-          .eq('phone', userDeviceId);
+          .eq('phone', syncId);
 
         if (diaryData && diaryData.length > 0) {
           diaryData.forEach(d => {
@@ -636,7 +1048,7 @@
           supabaseClient
             .from('user_diary')
             .upsert({
-              phone: userDeviceId,
+              phone: getUserSyncId(),
               day: AppState.currentDay,
               reflection: text,
               updated_at: new Date().toISOString()
@@ -679,7 +1091,7 @@
             supabaseClient
               .from('user_progress')
               .upsert({
-                phone: userDeviceId,
+                phone: getUserSyncId(),
                 day: AppState.currentDay,
                 completed: true,
                 completed_at: new Date().toISOString()

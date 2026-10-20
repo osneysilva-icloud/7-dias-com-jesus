@@ -50,6 +50,19 @@ const server = http.createServer(async (req, res) => {
   let reqUrl = req.url.split('?')[0];
 
   // ============================================================================
+  // ENDPOINTS CLIENT: Registro e Login com Validação de Compra Tutora
+  // ============================================================================
+  if (reqUrl === '/api/client/check-email') {
+    return require('./api/client/check-email')(req, res);
+  }
+  if (reqUrl === '/api/client/register') {
+    return require('./api/client/register')(req, res);
+  }
+  if (reqUrl === '/api/client/login') {
+    return require('./api/client/login')(req, res);
+  }
+
+  // ============================================================================
   // ENDPOINT API: Status do Servidor e Supabase
   // ============================================================================
   if (reqUrl === '/api/status' && req.method === 'GET') {
