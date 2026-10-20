@@ -6,9 +6,19 @@
   <title>A História Real de Jesus Cristo | 7 Dias com Jesus</title>
   <meta name="description" content="Assista gratuitamente à história real de Jesus Cristo e continue a sua jornada de transformação espiritual com o programa 7 Dias com Jesus.">
   
-  <!-- Favicon com o Novo Logo Oficial -->
+  <!-- Favicon & PWA Icons Oficiais -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#06080d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="7 Dias Jesus">
+  <meta name="application-name" content="7 Dias Jesus">
+  
   <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <link rel="apple-touch-icon" href="app-icon.jpg">
+  <link rel="icon" type="image/png" sizes="72x72" href="/icons/icon-72.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
   <meta property="og:image" content="logo.jpg">
 
   <!-- Fontes Google: Cinzel (Elegância Bíblica) + Outfit (Moderna e legível) -->
@@ -794,6 +804,15 @@
           }, cfg.pitchDelaySeconds * 1000);
         }
       }
+    }
+
+    // Registro do Service Worker PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('✝ PWA ativado com sucesso:', reg.scope))
+          .catch(e => console.warn('PWA:', e));
+      });
     }
   </script>
 </body>

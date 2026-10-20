@@ -213,6 +213,8 @@ const server = http.createServer(async (req, res) => {
   // ============================================================================
   if (reqUrl === '/' || reqUrl === '') {
     reqUrl = '/index.html';
+  } else if (reqUrl === '/app') {
+    reqUrl = '/app.html';
   } else if (reqUrl === '/admin') {
     reqUrl = '/admin.html';
   }

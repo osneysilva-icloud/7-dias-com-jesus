@@ -5,9 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Aplicativo | 7 Dias com Jesus</title>
   
-  <!-- Favicon Oficial -->
+  <!-- Favicon & PWA Icons Oficiais -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#06080d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="7 Dias Jesus">
+  <meta name="application-name" content="7 Dias Jesus">
+  <meta name="msapplication-TileColor" content="#06080d">
+  <meta name="msapplication-TileImage" content="/icons/icon-144.png">
+  
   <link rel="icon" type="image/svg+xml" href="logo.svg">
-  <link rel="apple-touch-icon" href="app-icon.jpg">
+  <link rel="icon" type="image/png" sizes="72x72" href="/icons/icon-72.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
 
   <!-- Fontes Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -211,6 +223,12 @@
         </button>
       </form>
 
+      <!-- Botão de Instalação PWA no Login -->
+      <button type="button" id="auth-install-btn" onclick="triggerPwaInstall()" class="hidden w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-amber-500/20 text-xs text-amber-300 font-semibold flex items-center justify-center gap-2 transition cursor-pointer mt-4">
+        <i data-lucide="download" class="w-4 h-4"></i>
+        <span id="auth-install-btn-text">Instalar Aplicativo no Telemóvel</span>
+      </button>
+
       <div class="mt-6 text-center text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
         <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
         <span>Acesso protegido · Integração oficial Tutora & Supabase</span>
@@ -252,6 +270,10 @@
             <span class="text-xs font-semibold text-white truncate max-w-[110px]" id="member-name-display">Fiel</span>
             <span class="text-[10px] text-emerald-400 font-mono" id="member-phone-display"></span>
           </div>
+          <button id="btn-header-install" onclick="triggerPwaInstall()" title="Instalar Aplicativo" class="hidden p-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 transition cursor-pointer flex items-center gap-1 text-[11px] font-semibold">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Instalar</span>
+          </button>
           <button onclick="handleClientLogout()" title="Sair da Conta" class="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition cursor-pointer flex items-center gap-1 text-[11px]">
             <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
             <span class="hidden sm:inline">Sair</span>
@@ -265,6 +287,29 @@
       <div id="progress-bar-fill" class="bg-gradient-to-r from-amber-500 to-amber-300 h-full w-0 transition-all duration-500"></div>
     </div>
   </header>
+
+  <!-- Banner Inteligente de Instalação PWA (Multi-Dispositivo) -->
+  <div id="pwa-install-banner" class="hidden bg-gradient-to-r from-amber-500/15 via-sacred-900 to-amber-500/15 border-b border-amber-500/30 px-4 py-2.5">
+    <div class="max-w-2xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center shrink-0">
+          <img src="/icons/icon-72.png" alt="App" class="w-6 h-6 rounded-lg object-cover">
+        </div>
+        <div class="truncate">
+          <p class="text-xs font-semibold text-white truncate">Instalar o App 7 Dias com Jesus</p>
+          <p class="text-[10px] text-amber-300/90 truncate">Acesso rápido e offline na sua tela inicial</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button onclick="triggerPwaInstall()" class="px-3 py-1.5 rounded-xl gold-btn text-sacred-950 font-cinzel font-bold text-[11px] shadow cursor-pointer">
+          Instalar
+        </button>
+        <button onclick="dismissPwaBanner()" title="Fechar" class="p-1.5 rounded-lg text-slate-400 hover:text-white text-xs cursor-pointer">
+          ✕
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- SELETOR HORIZONTAL DOS 7 DIAS (CARROSSEL INTERATIVO) -->
   <div class="bg-sacred-900/90 border-b border-white/5 py-3 px-4">
@@ -1208,6 +1253,144 @@
       });
       lucide.createIcons();
     }
+
+    // ==========================================================================
+    // PWA (PROGRESSIVE WEB APP) - INSTALAÇÃO E SERVICE WORKER MULTI-DISPOSITIVO
+    // ==========================================================================
+    let deferredPwaPrompt = null;
+
+    const isIosDevice = () => {
+      const ua = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    };
+
+    const isAppInstalled = () => {
+      return (window.navigator.standalone === true) ||
+             window.matchMedia('(display-mode: standalone)').matches ||
+             window.matchMedia('(display-mode: fullscreen)').matches;
+    };
+
+    function showPwaInstallPrompts() {
+      if (isAppInstalled()) return;
+      const dismissed = sessionStorage.getItem('7dias_pwa_dismissed');
+      
+      const banner = document.getElementById('pwa-install-banner');
+      const headerBtn = document.getElementById('btn-header-install');
+      const authBtn = document.getElementById('auth-install-btn');
+      const authBtnText = document.getElementById('auth-install-btn-text');
+
+      if (headerBtn) headerBtn.classList.remove('hidden');
+      if (authBtn) authBtn.classList.remove('hidden');
+
+      if (isIosDevice()) {
+        if (authBtnText) authBtnText.textContent = "Adicionar ao Ecrã Principal (iPhone)";
+      }
+
+      if (banner && !dismissed) {
+        banner.classList.remove('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    function dismissPwaBanner() {
+      const banner = document.getElementById('pwa-install-banner');
+      if (banner) banner.classList.add('hidden');
+      sessionStorage.setItem('7dias_pwa_dismissed', 'true');
+    }
+
+    function closeIosInstallModal() {
+      const modal = document.getElementById('ios-install-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function triggerPwaInstall() {
+      if (isIosDevice()) {
+        const modal = document.getElementById('ios-install-modal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          lucide.createIcons();
+        }
+        return;
+      }
+
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        const { outcome } = await deferredPwaPrompt.userChoice;
+        if (outcome === 'accepted') {
+          dismissPwaBanner();
+          const headerBtn = document.getElementById('btn-header-install');
+          const authBtn = document.getElementById('auth-install-btn');
+          if (headerBtn) headerBtn.classList.add('hidden');
+          if (authBtn) authBtn.classList.add('hidden');
+        }
+        deferredPwaPrompt = null;
+      } else {
+        alert("Para instalar: no menu do seu navegador (três pontinhos), toque em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.");
+      }
+    }
+
+    // Captura o evento nativo de instalação no Android/Chrome/Edge/Desktop
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+      showPwaInstallPrompts();
+    });
+
+    // Se for iOS Safari, ativa as opções de instalação automaticamente
+    if (isIosDevice() && !isAppInstalled()) {
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(showPwaInstallPrompts, 1200);
+      });
+    }
+
+    // Registro do Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((reg) => {
+            console.log('✝ [PWA] Service Worker registrado com sucesso! Escopo:', reg.scope);
+          })
+          .catch((err) => {
+            console.warn('⚠️ [PWA] Falha ao registrar Service Worker:', err);
+          });
+      });
+    }
+  </script>
+
+  <!-- Modal Instrutivo para Instalação no iOS (iPhone / iPad) -->
+  <div id="ios-install-modal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="card-glass max-w-sm w-full rounded-3xl p-6 border border-amber-500/30 text-center relative shadow-2xl">
+      <button onclick="closeIosInstallModal()" class="absolute top-4 right-4 p-1.5 rounded-lg text-slate-400 hover:text-white cursor-pointer">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center mb-3 border border-amber-500/30">
+        <img src="/icons/icon-192.png" alt="App Icon" class="w-11 h-11 rounded-xl object-cover">
+      </div>
+
+      <h3 class="font-cinzel text-lg font-bold text-white">Instalar no iPhone / iPad</h3>
+      <p class="text-xs text-slate-300 mt-1 mb-4">Adicione o 7 Dias com Jesus ao ecrã principal para usar como um aplicativo oficial em tela cheia:</p>
+
+      <div class="space-y-3 text-left text-xs text-slate-300 bg-sacred-950/80 p-4 rounded-2xl border border-white/5">
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</div>
+          <p>Toque no botão <strong>Compartilhar</strong> <svg class="inline w-4 h-4 text-amber-400 mx-1 align-sub" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg> na barra inferior do Safari.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</div>
+          <p>Role o menu para cima e selecione <strong class="text-white">"Ecrã principal"</strong> ou <strong class="text-white">"Adicionar à Tela de Início"</strong> <svg class="inline w-4 h-4 text-amber-400 mx-1 align-sub" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>.</p>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-300 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">3</div>
+          <p>Toque em <strong class="text-amber-400">"Adicionar"</strong> no canto superior direito.</p>
+        </div>
+      </div>
+
+      <button onclick="closeIosInstallModal()" class="w-full mt-4 py-3 rounded-xl gold-btn text-sacred-950 font-cinzel font-bold text-xs cursor-pointer shadow">
+        Entendi, Concluir
+      </button>
+    </div>
+  </div>
   </script>
 </body>
 </html>
