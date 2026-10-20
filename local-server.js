@@ -61,6 +61,9 @@ const server = http.createServer(async (req, res) => {
   if (reqUrl === '/api/client/login') {
     return require('./api/client/login')(req, res);
   }
+  if (reqUrl === '/api/prayers') {
+    return require('./api/prayers')(req, res);
+  }
 
   // ============================================================================
   // ENDPOINT API: Status do Servidor e Supabase

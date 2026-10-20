@@ -12,6 +12,7 @@ const PRECACHE_ASSETS = [
   '/config.js',
   '/prophets-data.js',
   '/daily-verses-data.js',
+  '/night-prayers-data.js',
   '/manifest.json',
   '/logo.svg',
   '/logo.jpg',
