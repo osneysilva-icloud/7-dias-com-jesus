@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "App e Funil de Alta Conversão - 7 Dias com Jesus (Tutora)",
   "scripts": {
-    "build": "echo 'Static build done'",
     "start": "node local-server.js",
     "dev": "node local-server.js"
   },
